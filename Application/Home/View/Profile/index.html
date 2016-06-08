@@ -1,0 +1,514 @@
+<extend name="Public:parent"/>
+<block name="extraStyle">
+    <style>
+    </style>
+</block>
+<block name="extraSlides"></block>
+<block name="extraContent">
+    <section style="margin-top: 50px;margin-bottom: 100px;" class="container main-content">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="user-profile">
+                        <div class="col-md-12">
+                            <div class="page-content">
+                                <a href="{:U('Profile/edit')}?id={$id}">
+                                    <h2>{$nickname}
+                                        <if condition="$Think.session.cooking_user_id eq $id">
+                                            <small>点击名字编辑个人资料</small>
+                                        </if>
+                                    </h2>
+                                </a>
+
+                                <div class="user-profile-img"><img width="60" height="60"
+                                                                   src="{$head_img}"
+                                                                   alt="{$nickname}"></div>
+                                <div class="ul_list ul_list-icon-ok about-user">
+                                    <ul>
+                                        <li><i class="icon-plus"></i>注册时间 : <span>{$created_timestamp}</span></li>
+                                        <li><i class="icon-map-marker"></i>性别 : <span>{$gender}</span></li>
+                                    </ul>
+                                </div>
+                                <p>{$signature}</p>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <!-- End page-content -->
+                        </div>
+                        <!-- End col-md-12 -->
+                        <div class="col-md-12">
+                            <div class="page-content page-content-user-profile">
+                                <div class="user-profile-widget">
+                                    <h2>用户数据</h2>
+
+                                    <div class="ul_list ul_list-icon-ok">
+                                        <ul>
+                                            <if condition="$Think.session.cooking_user_id neq $id">
+                                                <li><i class="fa fa-question-sign"></i><a
+                                                        href="{:U('Profile/posts')}?id={$id}">我的文章<span> ( <span>{$posts_collect}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa-comment"></i><a
+                                                        href="{:U('Profile/answers')}?id={$id}">我的回答<span> ( <span>{$replies}</span> ) </span></a>
+                                                </li>
+                                                <else/>
+                                                <li><i class="fa fa-question-sign"></i><a
+                                                        href="{:U('Profile/posts')}?id={$id}">我的文章<span> ( <span>{$posts_collect}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa-comment"></i><a
+                                                        href="{:U('Profile/answers')}?id={$id}">我的回答<span> ( <span>{$replies}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa fa-book"></i><a
+                                                        href="{:U('Profile/course')}?id={$id}&action={$Think.ACTION_NAME}">我的课程<span> ( <span>{$courses}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa-star"></i><a
+                                                        href="{:U('Profile/collect')}?id={$id}&action={$Think.ACTION_NAME}">我的收藏<span> ( <span>{$collect}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa-file-o"></i><a
+                                                        href="{:U('Profile/draft')}?id={$id}&action={$Think.ACTION_NAME}">我的草稿<span> ( <span>{$draft}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa-file-o"></i><a
+                                                        href="{:U('Profile/focus')}?id={$id}&action={$Think.ACTION_NAME}">我的关注<span> ( <span>{$focus_n}</span> ) </span></a>
+                                                </li>
+                                                <li><i class="fa fa-file-o"></i><a
+                                                        href="{:U('Profile/message')}?id={$id}&action={$Think.ACTION_NAME}">消息中心
+                                                    <span> ( <span>{$invite_n}</span> ) </span></a>
+                                                </li>
+                                            </if>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- End user-profile-widget -->
+                            </div>
+                            <!-- End page-content -->
+                        </div>
+                        <!-- End col-md-12 -->
+                    </div>
+                    <!-- End user-profile -->
+                </div>
+                <!-- End row -->
+                <div class="clearfix"></div>
+                <if condition="$action eq 'posts'">
+                    <notempty name="posts">
+                        <div class="page-content page-content-user">
+                            <div class="user-questions">
+                                <div class="boxedtitle page-title" style="padding-top: 20px;"><h2>我的帖子</h2></div>
+                                <foreach name="posts" item="v">
+                                    <article class="question user-question">
+                                        <p class="tag">【{$v.class_name}】{$v.tags}</p>
+                                        <span style="position: absolute;right: 20px;top: 10px;"><a
+                                                href="javascript:;" onclick="del('{$action}','{$v.id}',this)"><i
+                                                class="fa fa-times"></i></a></span>
+
+                                        <h3>
+                                            <a href="{:U('Index/detail')}?id={$v.id}">{$v.title}</a>
+                                        </h3>
+
+                                        <div class="question-content">
+                                            <div class="question-bottom">
+                                            <span class="question-favorite"><i
+                                                    class="fa fa-star"></i>{$v.collect}</span>
+                                                <span class="question-date"><i class="fa fa-clock-o"></i>{$v.updated_timestamp}</span>
+                                    <span class="question-comment"><a href="{:U('Index/detail')}?id={$v.id}"><i
+                                            class="fa fa-comment"></i>{$v.replies}
+                                        回复</a></span>
+                                                <span class="question-view"><i
+                                                        class="fa fa-user"></i>{$v.views} 阅读</span>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </foreach>
+                            </div>
+                        </div>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                    <elseif condition="$action eq 'answers'"/>
+                    <notempty name="answers">
+                        <div class="page-content page-content-user">
+                            <div class="user-questions">
+                                <div class="boxedtitle page-title" style="padding-top: 20px;"><h2>我的回答</h2></div>
+                                <ol class="commentlist clearfix">
+                                    <foreach name="answers" item="v">
+                                        <li class="comment" id="{$v.id}">
+                                            <div class="comment-body comment-body-answered clearfix">
+                                                <div class="avatar"><img alt="" src="{$v.from_user_header_img}">
+                                                </div>
+                                                <div class="comment-text">
+                                                    <div class="author clearfix">
+                                                        <div class="comment-author"><a
+                                                                href="{:U('Profile/index')}?id={$v.from_user_id}">{$v.from_user_name}
+                                                            {$v.author}</a>
+                                                            回复
+                                                            <a href="{:U('Profile/index')}?id={$v.to_user_id}">{$v.to_user_name}</a>
+                                                        </div>
+                                                <span class="question-vote-result"><span class="comment_like"
+                                                                                         style="display: inline !important;">+{$v.comment_ulike}</span> <span
+                                                        style="display: inline !important;" class="comment_dislike">-{$v.comment_dislike}</span></span>
+
+                                                        <div class="comment-meta">
+                                                            <div class="date"><i class="fa fa-time"></i>{$v.created_timestamp}
+                                                            </div>
+                                                        </div>
+                                                        <span style="position: absolute;right: 20px;top: 10px;"><a
+                                                                href="javascript:;"
+                                                                onclick="del('{$action}','{$v.id}',this)"><i
+                                                                class="fa fa-times"></i></a></span>
+                                                    </div>
+                                                    <div class="text"><p>{$v.content}</p>
+                                                    </div>
+                                                    <if condition="$v.is_good eq 1">
+                                                        <div class="question-answered question-answered-done"><i
+                                                                class="fa fa-check"></i>最佳回答
+                                                        </div>
+                                                    </if>
+                                                </div>
+                                            </div>
+                                            <!-- End children -->
+                                        </li>
+                                    </foreach>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                    <elseif condition="$action eq 'course'"/>
+                    <notempty name="course">
+                        <div class="page-content page-content-user">
+                            <div class="user-questions">
+                                <div class="boxedtitle page-title" style="padding-top: 20px;"><h2>我的课程</h2></div>
+                                <foreach name="course" item="v">
+                                    <article class="post blog_2 clearfix">
+                                        <div class="post-inner">
+                                            <h2 class="post-title"><span class=""><i class="fa fa-book"></i></span> <a
+                                                    href="{:U('Train/article')}?id={$v.id}">{$v.title}</a></h2><span>{$v.status}</span>
+                                            <span style="position: absolute;right: 20px;top: 10px;"><a
+                                                    href="javascript:;" onclick="del('{$action}','{$v.id}',this)"><i
+                                                    class="fa fa-times"></i></a></span>
+
+                                            <div class="post-img"><a href="{:U('Train/article')}?id={$v.id}"><img
+                                                    src="{$v.picture}" alt=""></a></div>
+                                            <div class="post-meta">
+                                                <span class="meta-author"><i class="icon-user"></i>{$v.lecturer}</span>
+                                            <span class="meta-date"><i
+                                                    class="icon-time"></i>{$v.updated_timestamp}</span>
+                                        <span class="meta-comment"><i
+                                                class="icon-comments-alt"></i>{$v.course_type}</span>
+                                            </div>
+                                            <div class="post-content">
+                                                <p>{$v.description}</p>
+                                                <span class="post-price">{$v.course_price}</span>
+                                                <a href="{:U('Train/article')}?id={$v.id}"
+                                                   class="post-read-more button color small">查看详细</a>
+                                            </div>
+                                            <!-- End post-content -->
+                                        </div>
+                                        <!-- End post-inner -->
+                                    </article>
+                                </foreach>
+                            </div>
+                        </div>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                    <elseif condition="$action eq 'collect'"/>
+                    <notempty name="collects">
+                        <div class="page-content page-content-user">
+                            <div class="user-questions">
+                                <div class="boxedtitle page-title" style="padding-top: 20px;"><h2>我的收藏</h2></div>
+                                <foreach name="collects" item="v">
+                                    <article class="question user-question">
+                                        <p class="tag">【{$v.class_name}】{$v.tags}</p>
+                                        <span style="position: absolute;right: 20px;top: 10px;"><a
+                                                href="javascript:;" onclick="del('{$action}','{$v.id}',this)"><i
+                                                class="fa fa-times"></i></a></span>
+
+                                        <h3>
+                                            <a href="{:U('Index/detail')}?id={$v.id}">{$v.title}</a>
+                                        </h3>
+
+                                        <div class="question-content">
+                                            <div class="question-bottom">
+                                            <span class="question-favorite"><i
+                                                    class="fa fa-star"></i>{$v.collect}</span>
+                                                <span class="question-date"><i class="fa fa-clock-o"></i>{$v.updated_timestamp}</span>
+                                    <span class="question-comment"><a href="{:U('Index/detail')}?id={$v.id}"><i
+                                            class="fa fa-comment"></i>{$v.replies}
+                                        回复</a></span>
+                                                <span class="question-view"><i
+                                                        class="fa fa-user"></i>{$v.views} 阅读</span>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </foreach>
+                            </div>
+                        </div>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                    <elseif condition="$action eq 'draft'"/>
+                    <notempty name="drafts">
+                        <div class="page-content page-content-user">
+                            <div class="user-questions">
+                                <div class="boxedtitle page-title" style="padding-top: 20px;"><h2>我的草稿</h2></div>
+                                <foreach name="drafts" item="v">
+                                    <article class="question user-question">
+                                        <p class="tag">【{$v.class_name}】{$v.tags}</p>
+                                        <span style="position: absolute;right: 20px;top: 10px;"><a
+                                                href="javascript:;" onclick="del('{$action}','{$v.id}',this)"><i
+                                                class="fa fa-times"></i></a></span>
+
+                                        <h3>
+                                            <a href="{:U('ask')}?id={$v.id}">{$v.title}</a>
+                                        </h3>
+
+                                        <div class="question-content">
+                                            <div class="question-bottom">
+                                            <span class="question-favorite"><i
+                                                    class="fa fa-star"></i>{$v.collect}</span>
+                                                <span class="question-date"><i class="fa fa-clock-o"></i>{$v.updated_timestamp}</span>
+                                    <span class="question-comment"><a href="{:U('ask')}?id={$v.id}"><i
+                                            class="fa fa-comment"></i>{$v.replies}
+                                        回复</a></span>
+                                                <span class="question-view"><i
+                                                        class="fa fa-user"></i>{$v.views} 阅读</span>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </foreach>
+                            </div>
+                        </div>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                    <elseif condition="$action eq 'focus'"/>
+                    <notempty name="users">
+                        <foreach name="users" item="v">
+                            <div class="about-author clearfix">
+                                <div class="author-l">
+                                    <div class="author-image">
+                                        <img alt="" src="{$v.head_img}">
+                                    </div>
+                                    <div>
+                                        <if condition="$v.user_focus gt 0">
+                                            <button style="font-size: 12px;font-weight: normal;margin-left: 4px;padding: 4px 10px;"
+                                                    onclick="Focus_on(this,'{$v.id}')" class="button color"
+                                                    data-uid="{$v.id}">取消关注
+                                            </button>
+                                        </if>
+                                    </div>
+                                </div>
+                                <div class="author-bio">
+                                    <h4><a href="{:U('Profile/index')}?id={$v._id}">{$v.nick_name}</a><br>
+                                        <small>{$v.user_attention}人关注</small>
+                                    </h4>
+                                    {$v.signature}
+                                </div>
+                            </div>
+                        </foreach>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                    <elseif condition="$action eq 'message'"/>
+                    <notempty name="messages">
+                        <div class="page-content page-content-user">
+                            <div class="user-questions">
+                                <div class="boxedtitle page-title" style="padding-top: 20px;"><h2>消息中心</h2></div>
+                                <ol class="commentlist clearfix">
+                                    <foreach name="messages" item="v">
+                                        <li class="comment">
+                                            <div class="comment-body comment-body-answered clearfix">
+                                                <div class="comment-text">
+                                                    <div class="author clearfix">
+                                                        <div class="comment-author"><a
+                                                                href="{:U('Profile/index')}?id={$v.user_id}">{$v.user_name}</a>
+                                                            邀请您回答
+                                                            <a href="{:U('Index/detail')}?id={$v.post_id}">{$v.title}</a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End children -->
+                                        </li>
+                                    </foreach>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="height_20"></div>
+                        <div class="pagination">
+                            <neq name="curPage" value="$lastPage">
+                                <a href="{$pageLink}&page={$lastPage}" class="prev-button"><i
+                                        class="fa fa-angle-left"></i></a>
+                                <a href="{$pageLink}&page={$lastPage}">{$lastPage}</a>
+                            </neq>
+                            <span class="current" href="{$pageLink}&page={$curPage}">{$curPage}</span>
+                            <neq name="curPage" value="$nextPage">
+                                <a href="{$pageLink}&page={$nextPage}">{$nextPage}</a>
+                                <a href="{$pageLink}&page={$nextPage}" class="next-button"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </neq>
+                        </div>
+                    </notempty>
+                </if>
+            </div>
+            <!-- End main -->
+            <!-- End main -->
+            <aside class="col-md-3 sidebar">
+                <notempty name="hrefArr">
+                    <include file="Public/ad"/>
+                </notempty>
+            </aside>
+            <!-- End sidebar -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="myJs">
+    <script>
+        var blog = '{$blog}';
+        var current_user_id = '{$Think.session.cooking_user_id}';
+        jQuery(document).ready(function () {
+            $(blog).click();
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+        });
+        function Focus_on(obj, id) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    attention_user_id: id,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/focus')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        if (data.success == 1) {
+                            $(obj).parent().html('<button style="font-size: 12px;font-weight: normal;margin-left: 4px;padding: 4px 10px;"' +
+                            'onclick="Focus_on(this)" class="button color" data-uid="{$user_id}">取消关注' +
+                            '</button>');
+                        } else if (data.success == 2) {
+                            $(obj).parents('.about-author').remove();
+                        }
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function del(a, id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    id: id,
+                    action: a,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/del')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $(obj).parents('article').remove();
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+    </script>
+</block>

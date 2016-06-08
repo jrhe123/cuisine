@@ -1,0 +1,187 @@
+<extend name="Public:parent"/>
+<block name="extraCss2">
+    <link rel="stylesheet" href="__PUBLIC__/global/plugins/kindeditor/themes/default/default.css"/>
+</block>
+<block name="extraSlides"></block>
+<block name="extraContent">
+    <section style="margin-top: 50px;margin-bottom: 100px;" class="container main-content">
+        <div class="row">
+            <div class="col-md-9">
+
+                <div class="page-content ask-question">
+                    <div class="boxedtitle page-title"><h2>发布文章</h2></div>
+
+                    <p>Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna
+                        adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis
+                        neque.</p>
+
+                    <div class="form-style form-style-3" id="question-submit">
+                        <form id="posts" onclick="return false">
+                            <div class="form-inputs clearfix">
+                                <p>
+                                    <label class="required">文章标题<span>*</span></label>
+                                    <input name="title" value="{$title}" type="text" id="question-title">
+                                    <span class="form-description">请选择一个适当的标题问题的答案变得更加简单。.</span>
+                                </p>
+
+                                <p>
+                                    <label class="required">话题<span>*</span></label>
+									<span class="styled-select">
+										<select name="topic">
+                                            <foreach name="topics" item="v">
+                                                <option value="{$v.id}">{$v.name}</option>
+                                            </foreach>
+                                        </select>
+									</span>
+                                    <span class="form-description">请选择合适的部分很容易寻找你的问题。</span>
+                                </p>
+                                <p>
+                                    <label class="required">分类<span>*</span></label>
+									<span class="styled-select">
+										<select name="class">
+                                            <foreach name="types" item="v">
+                                                <option value="{$v.id}">{$v.name}</option>
+                                            </foreach>
+                                        </select>
+									</span>
+                                    <span class="form-description">请选择合适的部分很容易寻找你的问题。</span>
+                                </p>
+                                <p>
+                                    <label>标签</label>
+                                    <input type="text" class="input" name="tags" id="question_tags" value="{$tags}"
+                                           data-seperator=",">
+                                        <span class="form-description">请选择合适的关键词: <span
+                                                class="color">烹饪 , 课程</span> .</span>
+                                </p>
+
+                                <div class="clearfix"></div>
+                                <!--<div class="poll_options">-->
+                                <!--<p class="form-submit add_poll">-->
+                                <!--<button id="add_poll" type="button" class="button color small submit"><i-->
+                                <!--class="icon-plus"></i>选择文件-->
+                                <!--</button>-->
+                                <!--</p>-->
+                                <!--<ul id="question_poll_item">-->
+                                <!--<li id="poll_li_1">-->
+                                <!--<div class="poll-li">-->
+                                <!--<p><input id="ask[1][title]" class="ask" name="ask[1][title]"-->
+                                <!--value="" type="text"></p>-->
+                                <!--<input id="ask[1][value]" name="ask[1][value]" value=""-->
+                                <!--type="hidden">-->
+                                <!--<input id="ask[1][id]" name="ask[1][id]" value="1" type="hidden">-->
+
+                                <!--<div class="del-poll-li"><i class="icon-remove"></i></div>-->
+                                <!--<div class="move-poll-li"><i class="icon-fullscreen"></i></div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--<script> var nextli = 2;</script>-->
+                                <!--<div class="clearfix"></div>-->
+                                <!--</div>-->
+
+                                <!--<label>附件</label>-->
+
+                                <!--<div class="fileinputs">-->
+                                <!--<input type="file" class="file">-->
+
+                                <!--<div class="fakefile">-->
+                                <!--<button type="button" class="button small margin_0">选择文件</button>-->
+                                <!--<span><i class="icon-arrow-up"></i>浏览</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="form-textarea">
+                                <p>
+                                    <label style="float: none" class="required">文章正文<span>*</span></label>
+
+                                    <textarea name="content" style="width:100%;height:400px;">{$content|htmlspecialchars_decode}</textarea>
+                                </p>
+                                <p><input id="draft" name="is_draft" type="checkbox"/> 是否存入草稿箱</p>
+                            </div>
+                            <p class="form-submit">
+                                <input value="{$Think.get.id}" name="id" type="hidden"/>
+                                <input onclick="formSubmit()" type="submit" id="publish-question" value="提交文章"
+                                       class="button color small submit">
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End main -->
+
+            <aside class="col-md-3 sidebar">
+                <div class="widget widget_stats">
+                    <h3 class="widget_title">个人操作</h3>
+
+                    <div class="ul_list ul_list">
+                        <ul>
+                            <li><i class="fa fa-file-o"></i><a href="{:U('Profile/draft')}">我的草稿</a></li>
+                            <li><i class="fa fa-check-square-o"></i><a href="{:U('Profile/ask')}">发布文章</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <notempty name="hrefArr">
+                    <include file="Public/ad" />
+                </notempty>
+            </aside>
+            <!-- End sidebar -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="extraJs">
+    <script charset="utf-8" src="__PUBLIC__/global/plugins/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/global/plugins/kindeditor/lang/zh_CN.js"></script>
+</block>
+<block name="myJs">
+    <script>
+        var blog = '{$blog}';
+        jQuery(document).ready(function () {
+            KindEditor.ready(function (K) {
+                window.editor = K.create('textarea[name="content"]');
+            });
+            $('#question-title').val('{$title}');
+            $('select[name="topic"]').val('{$topic}');
+            $('select[name="class"]').val('{$class}');
+            $('input[value="is_draft"]').iCheck('{$is_draft}');
+            $('input[name="is_draft"]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+
+            $(blog).click();
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+
+
+        });
+
+        // 提交
+        function formSubmit() {
+            editor.sync();  //编辑器需调用这个来获取html
+            if($('input[name="title"]').val() == '' || $('textarea[name="content"]').val() == ''){
+                toastMsg('warning','请输入内容','操作提示');
+                return;
+            }
+            $('input[name="is_draft"]').val(document.getElementById("draft").checked);
+            $.post('{:U("save")}', $('#posts').serialize(), function (data) {
+                if (checkAjaxReturn(data)) {
+                    $('#posts')[0].reset();
+                    //setTimeout(goList(), 1500);
+                }
+            }, 'json');
+        }
+
+        function goList(){
+            window.location.href="{:U('Index/blogList')}";
+        }
+    </script>
+</block>

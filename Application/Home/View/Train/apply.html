@@ -1,0 +1,144 @@
+<extend name="Public:parent"/>
+<block name="extraCss">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/bootstrap-select.css"/>
+</block>
+<block name="extraStyle">
+    <style>
+        .current-page {
+            display: unset;
+        }
+    </style>
+</block>
+<block name="extraSlides"></block>
+<block name="extraContent">
+    <div class="page-title">
+        <!--<img class="img-responsive" src="__PUBLIC__/home/images/5.jpg">-->
+        <section class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="crumbs">
+                        <a href="#">首页</a>
+                        <span class="crumbs-span">/</span>
+                        <span class="current-page">
+                            <a href="{:U('Train/index')}">
+                                <if condition="$course.column eq 0">
+                                    烹饪工艺与营养
+                                    <else/>
+                                    分享课程
+                                </if>
+                            </a>
+                        </span>
+                        <span class="crumbs-span">/</span>
+                        <span class="current-page">{$course.title}</span>
+                        <span class="crumbs-span">/</span>
+                        <span class="current-page">在线报名</span>
+                    </div>
+                </div>
+            </div>
+            <!-- End row -->
+        </section>
+        <!-- End container -->
+    </div>
+    <!-- End breadcrumbs -->
+
+    <section class="container main-content" style="margin-bottom: 100px; margin-top: 50px">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="page-content">
+                    <div class="boxedtitle page-title"><h2>在线报名</h2></div>
+
+                    <p>以上课程随到随学，均免收报名费，除学费，教材费用之外不再另收其他杂费。</p>
+
+                    <div class="form-style form-style-3" id="question-submit">
+                        <form id="form" method="post" action="{:U('Train/result')}" onsubmit="return false">
+                            <!--<div class="form-inputs clearfix">-->
+                                <!--<p>-->
+                                    <!--<label class="required">姓名<span>*</span></label>-->
+                                    <!--<input type="text" name="name">-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--<label class="required">邮箱<span>*</span></label>-->
+                                    <!--<input type="text" name="email">-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--<label class="required">联系电话<span>*</span></label>-->
+                                    <!--<input type="text" name="phone">-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--<label class="required">性别<span>*</span></label>-->
+									<!--<span class="styled-select" style="width:100%;">-->
+										<!--<select name="gender">-->
+                                            <!--<option value="1">男</option>-->
+                                            <!--<option value="2">女</option>-->
+                                        <!--</select>-->
+									<!--</span>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <p><div class="user-profile-img"><img src="{$head_img}" alt=""/></div></p>
+                            <p>昵称：{$nickname}</p>
+                            <p>真实姓名：{$r_username}</p>
+                            <p>性别：{$gender}</p>
+                            <p>联系电话：{$phone}</p>
+                            <p>注册时间：{$created_timestamp}</p>
+                            <div id="form-textarea">
+                                <p>
+                                    <label class="required">备注<span>*</span></label>
+                                    <textarea name="remark" aria-required="true" cols="58" rows="8"></textarea>
+                                </p>
+                            </div>
+                            <p class="form-submit">
+                                <input name="user_id" value="{$id}" type="hidden"/>
+                                <input name="course_id" type="hidden" value="{$Think.get.id}"/>
+                                <input onclick="formSubmit()" type="submit" id="publish-question" value="提交报名"
+                                       class="button color small submit">
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End main -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="extraJs">
+    <script src="__PUBLIC__/home/js/bootstrap-select.js"></script>
+</block>
+<block name="myJs">
+    <script>
+        var current_user_id = '{$Think.session.cooking_user_id}';
+        jQuery(document).ready(function () {
+            $('.bs-select').selectpicker({
+                iconBase: 'fa',
+                tickIcon: 'fa-check'
+            });
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+        });
+
+        function formSubmit() {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            if($('input[name="course_id"]').val() != ''){
+                $.post('{:U("apply")}', $('#form').serialize(), function (data) {
+                    if (checkAjaxReturn(data)) {
+                        setTimeout('jump('+data.apply_id+')',1000);
+                    }
+                }, 'json');
+            }
+        }
+
+        function jump(id){
+            window.location.href = '{:U("Train/result")}?id='+id;
+        }
+    </script>
+</block>

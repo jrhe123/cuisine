@@ -1,0 +1,802 @@
+<extend name="Public:parent"/>
+<block name="extraCss">
+    <link href="__PUBLIC__/home/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link rel="stylesheet" type="text/css"
+          href="__PUBLIC__/home/plugins/bootstrap-summernote/summernote.css">
+</block>
+<block name="extraStyle">
+    <style>
+        a.bds_more, .bds_tools a{
+            height: 23px !important;
+        }
+        .bdshare-button-style0-16 a, .bdshare-button-style0-16 .bds_more{
+            margin: 0 !important;
+            padding-top:5px !important;
+        }
+        .bdshare-button-style0-16 .bds_count{
+            background-position: -41px -26px !important;
+            height: 21px !important;
+            width: 43px !important;
+        }
+    </style>
+</block>
+<block name="extraSlides"></block>
+<block name="extraContent">
+    <section style="margin-top: 50px;" class="container main-content">
+        <div class="row">
+            <div class="col-md-9">
+                <article class="question single-question question-type-normal">
+                    <h2>
+                        <a href="{:U('Index/detail')}?id={$id}">{$title}</a>
+                    </h2>
+                    <if condition="$posts_collect gt 0">
+                        <a class="question-report link" href="javascript:;" onclick="collect(this)">取消收藏</a>
+                        <else/>
+                        <a class="question-report link" href="javascript:;" onclick="collect(this)">收藏</a>
+                    </if>
+
+                    <div class="question-inner">
+                        <div class="clearfix"></div>
+                        <div class="question-desc">
+                            {$content}
+                        </div>
+                        <div class="question-details">
+                            <span class="question-favorite"><i class="fa fa-star"></i>{$collect}</span>
+                        </div>
+                        <span class="question-date"><i class="fa fa-time"></i>{$minute}</span>
+                        <span class="question-comment"><a href="#"><i class="fa fa-comment"></i>{$replies} 回复</a></span>
+                        <span class="question-view"><i class="fa fa-user"></i>{$views} 阅读</span>
+                        <span class="question-invite"><a href="javascript:;" onclick="invitesList()">邀请回答</a></span>
+                        <span class="single-question-vote-result"><span class="ulike">+{$posts_ulike}</span> <span
+                                class="dislike">-{$posts_dislike}</span></span>
+                        <ul class="single-question-vote">
+                            <li><a href="javascript:;" onclick="dislikePost('{$id}')" class="single-question-vote-down"
+                                   title="Dislike"><i
+                                    class="fa fa-thumbs-down"></i></a></li>
+                            <li><a href="javascript:;" onclick="likePost('{$id}')" class="single-question-vote-up"
+                                   title="Like"><i class="fa fa-thumbs-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <div class="panel-container">
+                            <div data-showsearch="true" id="question-invite-panel" class="question-invite-panel"
+                                 style="display: none;">
+                                <i class="icon icon-spike"></i>
+
+                                <div class="invite-main-wrap">
+                                    <div class="invite-title">
+                                    <!--<span class="input-wrapper">-->
+                                    <!--<input type="text" data-tip="s$t$也可以搜索个人介绍，如「医生」"-->
+                                           <!--class="search-input zg-form-text-input" placeholder="搜索你想邀请的人"-->
+                                           <!--aria-haspopup="true" autocomplete="off" aria-label="搜索你想邀请的人">-->
+                                    <!--<i class="zg-icon icon-magnify"></i>-->
+                                    <!--</span>-->
+                                    <span class="invite-status">
+                                    </span>
+                                    </div>
+
+                                    <ul class="suggest-persons clearfix">
+
+                                        <!--<li style="" class="person odd bordered">-->
+                                        <!--<div class="blk">-->
+                                        <!--<a href="/people/1nami" class="zm-item-link-avatar" data-tip="p$t$1nami"-->
+                                        <!--title="学习网站收集控">-->
+                                        <!--<img class="zm-item-img-avatar"-->
+                                        <!--src="http://pic1.zhimg.com/3d190abe6611a19f03437ae9ce2d7fdc_is.jpg">-->
+                                        <!--</a>-->
+
+                                        <!--<div class="content">-->
+
+                                        <!--<button data-uid="3daadd2ae3726d4e5eaabc663332c2ca"-->
+                                        <!--class="invite-button zg-btn zg-btn-green">邀请回答-->
+                                        <!--</button>-->
+
+                                        <!--<a class="zg-link" href="http://www.zhihu.com/people/1nami"-->
+                                        <!--data-tip="p$t$1nami" data-original_title="学习网站收集控">学习网站收集控</a>-->
+
+                                        <!--<div title="博客：http://yangqingfeng.com" class="bio">-->
+                                        <!--博客：<a rel="nofollow noreferrer" target="_blank"-->
+                                        <!--class=" external" href="http://yangqingfeng.com"><span-->
+                                        <!--class="invisible">http://</span><span class="visible">yangqingfeng.com</span><span-->
+                                        <!--class="invisible"></span><i class="icon-external"></i></a>-->
+                                        <!--</div>-->
+                                        <!--<div title="在该话题下有 8 个回答" class="reason">-->
+                                        <!--在 <a data-topicid="2083" data-token="19556496"-->
+                                        <!--data-tip="t$t$19556496"-->
+                                        <!--href="/people/1nami/topic/19556496/answers"> 网站 </a> 话题下有 8-->
+                                        <!--个回答-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</li>-->
+
+                                        <!--<li style="" class="person even bordered">-->
+                                        <!--<div class="blk">-->
+                                        <!--<a href="/people/rainy-vczh" class="zm-item-link-avatar"-->
+                                        <!--data-tip="p$t$rainy-vczh" title="vczh">-->
+                                        <!--<img class="zm-item-img-avatar"-->
+                                        <!--src="http://pic1.zhimg.com/3a6c25ac3864540e80cdef9bc2a73900_is.jpg">-->
+                                        <!--</a>-->
+
+                                        <!--<div class="content">-->
+
+                                        <!--<button data-uid="0970f947b898ecc0ec035f9126dd4e08"-->
+                                        <!--class="invite-button zg-btn zg-btn-green">邀请回答-->
+                                        <!--</button>-->
+
+                                        <!--<a title="vczh" class="zg-link"-->
+                                        <!--href="http://www.zhihu.com/people/rainy-vczh"-->
+                                        <!--data-tip="p$t$rainy-vczh">vczh</a>-->
+
+                                        <!--<div title="专业造轮子 https://github.com/vczh-libraries" class="bio">-->
+                                        <!--专业造轮子 …-->
+                                        <!--</div>-->
+                                        <!--<div title="在该话题下有 42 个回答" class="reason">-->
+                                        <!--在 <a data-topicid="2083" data-token="19556496"-->
+                                        <!--data-tip="t$t$19556496"-->
+                                        <!--href="/people/rainy-vczh/topic/19556496/answers"> 网站 </a>-->
+                                        <!--话题下有 42 个回答-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</li>-->
+
+                                        <!--<li style="" class="person odd bordered">-->
+                                        <!--<div class="blk">-->
+                                        <!--<a href="/people/Akarintyan" class="zm-item-link-avatar"-->
+                                        <!--data-tip="p$t$Akarintyan" data-original_title="阿卡林酱">-->
+                                        <!--<img class="zm-item-img-avatar"-->
+                                        <!--src="http://pic4.zhimg.com/5badd674f89ca4da5d220795e0d6711f_is.jpg">-->
+                                        <!--</a>-->
+
+                                        <!--<div class="content">-->
+
+                                        <!--<button data-uid="20bcaddaa8b74dcb63447002b35671eb"-->
+                                        <!--class="invite-button zg-btn zg-btn-green">邀请回答-->
+                                        <!--</button>-->
+
+                                        <!--<a title="阿卡林酱" class="zg-link"-->
+                                        <!--href="http://www.zhihu.com/people/Akarintyan"-->
+                                        <!--data-tip="p$t$Akarintyan">阿卡林酱</a>-->
+
+                                        <!--<div title="萌豚/代码工/一本正经地胡说八道" class="bio">-->
+                                        <!--萌豚/代码工/一本正经地胡说八道-->
+                                        <!--</div>-->
+                                        <!--<div title="在该话题下有 10 个回答" class="reason">-->
+                                        <!--在 <a data-topicid="2083" data-token="19556496"-->
+                                        <!--data-tip="t$b$19556496"-->
+                                        <!--href="/people/Akarintyan/topic/19556496/answers"> 网站 </a>-->
+                                        <!--话题下有 10 个回答-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</li>-->
+
+                                        <!--<li style="" class="person even bordered">-->
+                                        <!--<div class="blk">-->
+                                        <!--<a href="/people/chen-jun-shuo" class="zm-item-link-avatar"-->
+                                        <!--data-tip="p$t$chen-jun-shuo" data-original_title="陈骏烁">-->
+                                        <!--<img class="zm-item-img-avatar"-->
+                                        <!--src="http://pic1.zhimg.com/00c8c070da1f70a1f1f21a2318d040e0_is.jpg">-->
+                                        <!--</a>-->
+
+                                        <!--<div class="content">-->
+
+                                        <!--<button data-uid="9b9818bcead5d7b177690e5fe32156ac"-->
+                                        <!--class="invite-button zg-btn zg-btn-green">邀请回答-->
+                                        <!--</button>-->
+
+                                        <!--<a title="陈骏烁" class="zg-link"-->
+                                        <!--href="http://www.zhihu.com/people/chen-jun-shuo"-->
+                                        <!--data-tip="p$t$chen-jun-shuo">陈骏烁</a>-->
+
+                                        <!--<div title="紫个弟仔过好惜" class="bio">-->
+                                        <!--紫个弟仔过好惜-->
+                                        <!--</div>-->
+                                        <!--<div title="在该话题下有 2 个回答" class="reason">-->
+                                        <!--在 <a data-topicid="2083" data-token="19556496"-->
+                                        <!--data-tip="t$b$19556496"-->
+                                        <!--href="/people/chen-jun-shuo/topic/19556496/answers">-->
+                                        <!--网站 </a> 话题下有 2 个回答-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</li>-->
+
+
+                                    </ul>
+
+                                    <div style="" class="zm-invite-pager">
+                                        <a style="margin-right: 20px;" href="javascript:;"
+                                           class="js-prev link-disabled">上一页</a>
+                                        <a style="" href="javascript:;" class="js-next">下一页</a>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="zm-comment-box" style="display: none;"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="share-tags page-content">
+                    <div class="question-tags"><i class="fa fa-tags"></i>
+                        {$tags}
+                    </div>
+                    <!-- End share-inside-warp -->
+                    <div class="share-inside">
+                        <div class="bdsharebuttonbox" data-tag="share_1">
+                            <a class="bds_more" data-cmd="more"> &nbsp;&nbsp;&nbsp;分享</a>
+                            <a class="bds_count" data-cmd="count"></a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- End share-tags -->
+
+                <notempty name="comments">
+                    <div id="commentlist" class="page-content">
+                        <div class="boxedtitle page-title"><h2>回复 ( <span class="color">{$replies}</span> )</h2></div>
+                        <ol class="commentlist clearfix">
+                            <foreach name="comments" item="v">
+                                <li class="comment" id="{$v.id}">
+                                    <div class="comment-body comment-body-answered clearfix">
+                                        <div class="avatar"><img alt="" src="{$v.from_user_header_img}">
+                                        </div>
+                                        <div class="comment-text">
+                                            <div class="author clearfix">
+                                                <div class="comment-author"><a
+                                                        href="{:U('Profile/index')}?id={$v.from_user_id}">{$v.from_user_name}
+                                                    {$v.author}</a>
+                                                    回复
+                                                    <a href="{:U('Profile/index')}?id={$v.to_user_id}">{$v.to_user_name}</a>
+                                                </div>
+                                                <div class="comment-vote">
+                                                    <ul class="question-vote">
+                                                        <li><a href="javascript:;" onclick="likeComment('{$v.id}')"
+                                                               class="question-vote-up" title="Like"></a></li>
+                                                        <li><a href="javascript:;" onclick="dislikeComment('{$v.id}')"
+                                                               class="question-vote-down" title="Dislike"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <span class="question-vote-result"><span class="comment_like"
+                                                                                         style="display: inline !important;">+{$v.comment_ulike}</span> <span
+                                                        style="display: inline !important;" class="comment_dislike">-{$v.comment_dislike}</span></span>
+
+                                                <div class="comment-meta">
+                                                    <div class="date"><i class="fa fa-time"></i>{$v.created_timestamp}
+                                                    </div>
+                                                </div>
+                                                <a class="comment-reply link" href="#content_label"
+                                                   onclick="reply_to('{$v.from_user_id}','{$v.from_user_name}')"><i
+                                                        class="fa fa-reply"></i>回复</a>
+                                            </div>
+                                            <div class="text"><p>{$v.content}</p>
+                                            </div>
+                                            <if condition="$v.is_good eq 1">
+                                                <div class="question-answered question-answered-done"><i
+                                                        class="fa fa-check"></i>最佳回答
+                                                </div>
+                                            </if>
+                                        </div>
+                                    </div>
+                                    <!-- End children -->
+                                </li>
+                            </foreach>
+                        </ol>
+                        <!-- End commentlist -->
+                    </div>
+                    <!-- End page-content -->
+                </notempty>
+                <div id="respond" class="comment-respond page-content clearfix" style="margin-bottom: 20px;">
+                    <div class="boxedtitle page-title"><h2>回复问题</h2></div>
+                    <form action="" method="post" id="commentform" class="comment-form" onsubmit="return false">
+                        <div id="respond-textarea">
+                            <p>
+                                <label id="content_label" name="content_label" class="required"
+                                       for="content">内容<span>*</span></label>
+
+                                <textarea id="content" name="content" style="width:100%;height:400px;"></textarea>
+                            </p>
+
+                            <div class="digest"><label><input id="is_audit" name="is_audit" type="checkbox">
+                                申请回复加精</label>
+                            </div>
+                        </div>
+                        <p class="form-submit">
+                            <input onclick="reply()" name="submit" type="submit" value="提交回复"
+                                   class="button small color">
+                        </p>
+                    </form>
+                </div>
+
+                <!--<div class="post-next-prev clearfix">-->
+                <!--<p class="prev-post">-->
+                <!--<a href="#"><i class="fa fa-double-angle-left"></i>&nbsp;上一个问题</a>-->
+                <!--</p>-->
+
+                <!--<p class="next-post">-->
+                <!--<a href="#">下一个问题&nbsp;<i class="fa fa-double-angle-right"></i></a>-->
+                <!--</p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; End post-next-prev &ndash;&gt;-->
+            </div>
+            <!-- End main -->
+            <aside class="col-md-3 sidebar">
+                <div class="about-author clearfix">
+                    <div class="author-l">
+                        <div class="author-image">
+                            <img alt="" src="{$head_img}">
+                        </div>
+                        <div>
+                            <if condition="$user_id neq $current_u_id">
+                                <if condition="$user_focus gt 0">
+                                    <button style="font-size: 12px;font-weight: normal;margin-left: 4px;padding: 4px 10px;"
+                                            onclick="Focus_on(this)" class="button color" data-uid="{$user_id}">取消关注
+                                    </button>
+                                    <else/>
+                                    <button style="font-size: 12px;font-weight: normal;margin-left:15px;padding: 4px 10px;"
+                                            onclick="Focus_on(this)" class="button color" data-uid="{$user_id}">关注
+                                    </button>
+                                </if>
+                            </if>
+                        </div>
+                    </div>
+                    <div class="author-bio">
+                        <h4><a href="{:U('Profile/index')}?id={$user_id}">{$nick_name}</a><br>
+                            <small>{$user_attention}人关注</small>
+                        </h4>
+                        {$signature}
+                    </div>
+                </div>
+                <!-- End about-author -->
+
+                <!--<div id="related-posts">-->
+                    <!--<h2>相关问题</h2>-->
+                    <!--<ul class="related-posts">-->
+                        <!--<li class="related-item"><h3><a href="#"><i class="fa fa-double-angle-right"></i>This Is My-->
+                            <!--Second Poll 问题</a></h3></li>-->
+                        <!--<li class="related-item"><h3><a href="#"><i class="fa fa-double-angle-right"></i>This is my-->
+                            <!--third 问题</a></h3></li>-->
+                        <!--<li class="related-item"><h3><a href="#"><i class="fa fa-double-angle-right"></i>This is my-->
+                            <!--fourth 问题</a></h3></li>-->
+                        <!--<li class="related-item"><h3><a href="#"><i class="fa fa-double-angle-right"></i>This is my-->
+                            <!--fifth 问题</a></h3></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+                <!-- End related-posts -->
+
+                <div class="widget widget_highest_points">
+                    <h3 class="widget_title">排行榜</h3>
+                    <ul>
+                        <foreach name="ranking" item="v">
+                            <li>
+                                <div class="author-img">
+                                    <a href="#"><img width="60" height="60"
+                                                     src="{$v.picture}" alt=""></a>
+                                </div>
+                                <h6><a href="{:U('Profile/index')}?id={$v.id}">{$v.nickname}</a></h6>
+                                <span class="comment">{$v.point} 分</span>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3 class="widget_title">最近问题</h3>
+                    <ul class="related-posts">
+                        <foreach name="latest_problem" item="v">
+                            <li class="related-item">
+                                <h3><a href="{:U('Index/detail')}?id={$v.id}">{$v.title}</a></h3>
+
+                                <p>{$v.content}</p>
+
+                                <div class="clear"></div>
+                                <span>{$v.updated_timestamp}</span>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+            </aside>
+            <!-- End sidebar -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="extraJs">
+    <script src="__PUBLIC__/home/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script charset="utf-8" src="__PUBLIC__/global/plugins/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/global/plugins/kindeditor/lang/zh_CN.js"></script>
+    <script type="text/javascript" id="bdshare_js" data="type=tools" ></script>
+    <script type="text/javascript" id="bdshell_js"></script>
+    <script type="text/javascript">document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);</script>
+</block>
+
+<block name="myJs">
+    <script>
+        var blog = '{$blog}';
+        var current_post_id = '{$Think.get.id}';
+        var current_user_id = '{$Think.session.cooking_user_id}';
+        var current_user_name = '{$Think.session.cooking_user_name}';
+        var reply_to_user_id = '';
+        var title = '{$title}';
+        var topic = parseInt('{$topic}');
+        var class_id = parseInt('{$class}');
+        var tags = '{$tags}';
+        var curPage = 0;
+        var html = '';
+        jQuery(document).ready(function () {
+            $(blog).click();
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+            KindEditor.ready(function (K) {
+                window.editor = K.create('textarea[name="content"]');
+            });
+            $('.question-invite').click(function () {
+                if ($('#question-invite-panel').attr('style')) {
+                    $('#question-invite-panel').removeAttr('style');
+                } else {
+                    $('#question-invite-panel').css('display', 'none');
+                }
+            });
+
+        });
+
+        function reply_to(t_id, t_name) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            if (current_user_id == t_id) {
+                reply_to_user_id = '';
+                $('label[name="content_label"]').html(current_user_name + ':');
+                $('textarea[name="content"]').val(current_user_name + ':');
+            } else {
+                reply_to_user_id = t_id;
+                $('label[name="content_label"]').html(current_user_name + ':@' + t_name);
+                $('textarea[name="content"]').val(current_user_name + ':@' + t_name);
+            }
+        }
+
+        function reply() {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            editor.sync();  //编辑器需调用这个来获取html
+            var content = $('textarea[name="content"]').val();
+            if (content == '') {
+                toastMsg('warning', '请输入内容', '操作提示');
+                return;
+            }
+            var is_audit = document.getElementById("is_audit").checked;
+            $.ajax({
+                type: "post",
+                data: {
+                    post_id: current_post_id,
+                    from_user_id: current_user_id,
+                    to_user_id: reply_to_user_id,
+                    content: content,
+                    is_audit: is_audit,
+                    title: title,
+                    topic: topic,
+                    class_id: class_id,
+                    tags: tags
+                },
+                url: "{:U('Action/reply')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $('#commentform')[0].reset();
+                        setTimeout("window.location.reload()", 1000);
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+
+        }
+
+        function likePost(id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    post_id: id,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/likePosts')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $('.ulike').html('+' + data.count);
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function dislikePost(id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    post_id: id,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/dislikePosts')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $('.dislike').html('-' + data.count);
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function likeComment(id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    comment_id: id,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/likeComment')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $('li[id="' + id + '"]').find('.comment_like').html('+' + data.count);
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function dislikeComment(id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    comment_id: id,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/dislikeComment')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $('li[id="' + id + '"]').find('.comment_dislike').html('-' + data.count);
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function collect(obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    collect_post_id: '{$id}',
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/collect')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $('.question-favorite').html('<i class="fa fa-star"></i>' + data.count);
+                        if (data.success == 1) {
+                            $(obj).html('取消收藏');
+                        } else if (data.success == 2) {
+                            $(obj).html('收藏');
+                        }
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function Focus_on(obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    attention_user_id: '{$user_id}',
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/focus')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        if (data.success == 1) {
+                            $(obj).parent().html('<button style="font-size: 12px;font-weight: normal;margin-left: 4px;padding: 4px 10px;"' +
+                            'onclick="Focus_on(this)" class="button color" data-uid="{$user_id}">取消关注' +
+                            '</button>');
+                        } else if (data.success == 2) {
+                            $(obj).parent().html('<button style="font-size: 12px;font-weight: normal;margin-left:15px;padding: 4px 10px;"' +
+                            'onclick="Focus_on(this)" class="button color" data-uid="{$user_id}">关注' +
+                            '</button>');
+                        }
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function invitesList() {
+            curPage = 1;
+            html = '';
+            $.ajax({
+                type: "post",
+                data: {
+                    post_id :'{$id}',
+                    topic: '{$topic}',
+                    user_id: '{$user_id}',
+                    page: curPage
+                },
+                url: "{:U('invitesList')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.data, function (k, v) {
+                            html += '<li style="" class="person odd bordered">' +
+                            '<div class="blk">' +
+                            '<a href="{:U("Profile/index")}?id=' + v.id + '" class="zm-item-link-avatar" data-tip="p$t$1nami" title="学习网站收集控">' +
+                            '<img class="zm-item-img-avatar" src="' + v.head_img + '"></a>' +
+                            '<div class="content">' +
+                            '<button data-uid="' + v.id + '" onclick="invite(this)" class="invite-button zg-btn zg-btn-green">邀请回答</button>' +
+                            '<a class="zg-link" href="{:U("Profile/index")}?id=' + v.id + '" data-tip="p$t$1nami" data-original_title="' + v.nickname + '">' + v.nickname + '</a>' +
+                            '<div title="' + v.signature + '" class="bio">' + v.signature + '' +
+                            '</div>' +
+                            '<div title="在该话题下有回答" class="reason">' +
+                            '在 <a data-topicid="2083" data-token="19556496" data-tip="t$t$19556496" href="javascript:;"> ' + v.topic_name + ' </a> 话题下有回答 </div> </div> </div>' +
+                            '</li>';
+                        });
+                        $('.suggest-persons').html(html);
+                        $('.suggest-persons').next().html('<a style="margin-right: 20px;" href="javascript:;" onclick="invitesList(' + data.lastPage + ')" class="js-prev ">上一页</a>' +
+                        '<a style="" href="javascript:;" onclick="invitesList(' + data.nextPage + ')" class="js-next">下一页</a>');
+                        if (data.lastPage == curPage) {
+                            $('.js-prev').addClass('link-disabled');
+                            $('.js-next').addClass('link-disabled');
+                        } else {
+                            $('.js-prev').removeClass('link-disabled');
+                            $('.js-next').removeClass('link-disabled');
+                        }
+                        if(data.data == ''){
+                            html = '<p>暂没有数据</p>';
+                        }
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function invite(obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            var id = $(obj).attr('data-uid');
+            $.ajax({
+                type: "post",
+                data: {
+                    be_invited_user_id: id,
+                    user_id: current_user_id,
+                    post_id :'{$id}'
+                },
+                url: "{:U('Action/invite')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        $(obj).parents('.person ').remove();
+                        invitesList();
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+
+        }
+    </script>
+    <script>
+        window._bd_share_config = {
+            common : {
+                bdText : '顺大烹饪学院-{$title}',
+                bdUrl : '{:U("Index/detail")}?id={$id}'
+            },
+            share : [{
+                "bdSize" : 16
+            }],
+            image : [{
+                viewType : 'list',
+                viewPos : 'top',
+                viewColor : 'black',
+                viewSize : '16',
+                viewList : ['qzone','tsina','huaban','tqq','renren']
+            }],
+            selectShare : [{
+                "bdselectMiniList" : ['qzone','tqq','kaixin001','bdxc','tqf']
+            }]
+        }
+
+        //以下为js加载部分
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</block>

@@ -1,0 +1,397 @@
+<extend name="Public:parent"/>
+<block name="extraCss2">
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css"/>
+</block>
+<block name="extraStyle">
+    <style>
+        #allmap {
+            height: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #allmap td {
+            box-sizing: unset;
+            vertical-align: middle;
+        }
+
+        #allmap img,
+        .google-maps img {
+            max-width: none;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], textarea, select {
+            background: #f3f3f3 none repeat scroll 0 0;
+            border: 1px solid #dedede;
+            border-radius: 2px;
+            color: #2f3239;
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+            max-width: 100%;
+            outline: medium none;
+            padding: 8px;
+            transition: border 0.25s linear 0s, color 0.25s linear 0s, background-color 0.25s linear 0s;
+            width: 100% !important;
+        }
+
+        .input-icon input {
+            padding: 7px 0 7px 30px;
+            width: 220px !important;
+        }
+
+        .tab-inner-warp .page-content, .about-author, .user-question, #related-posts {
+            background: #fff none repeat scroll 0 0;
+            border: 0;
+            box-shadow: 0 0 0 0;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        #business p {
+            text-indent: 2em;
+        }
+
+        #business .page-content {
+            border-bottom: 2px solid #e3e3e3;
+            margin-bottom: 25px;
+        }
+
+        #business a {
+            color: #3498DB;
+            padding-left: 25px;
+        }
+    </style>
+</block>
+<block name="extraSlides"></block>
+<block name="extraContent">
+
+    <section class="container main-content page-left-sidebar" style="margin-bottom: 50px;margin-top: 50px;">
+        <!--<div class="row">-->
+        <!--<div class="contact-us">-->
+        <!--<div id="baidumap" class="col-md-12 row">-->
+        <!--<div class="page-content">-->
+        <!---->
+        <!--</div>-->
+        <!--&lt;!&ndash; End page-content &ndash;&gt;-->
+        <!--</div>-->
+
+        <!--</div>-->
+        <!--&lt;!&ndash; End contact-us &ndash;&gt;-->
+        <!--</div>-->
+        <!-- End row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabs-warp tabs-vertical">
+                    <ul class="tabs" style="border: 1px solid #e3e3e3;">
+                        <li style="border-bottom: 1px solid #e3e3e3" class="tab"><a href="#">关于我们</a></li>
+                        <li style="border-bottom: 1px solid #e3e3e3" class="tab"><a href="#">联系我们</a></li>
+                        <li style="border-bottom: 1px solid #e3e3e3" class="tab"><a href="#">意见反馈</a></li>
+                        <li style="border-bottom: 1px solid #e3e3e3" class="tab"><a href="#">商务合作</a></li>
+                        <li style="border-bottom: 1px solid #e3e3e3" class="tab"><a href="#">人才招聘</a></li>
+                        <li class="tab"><a href="#">技术支持</a></li>
+                    </ul>
+                    <div class="tab-inner-warp" style="padding-top: 0">
+                        <div class="tab-inner">
+                            <div id="about" class="row" style="margin-bottom: 20px">
+                                <div class="page-content">
+                                    <div class="boxedtitle page-title"><h2>关于我们</h2></div>
+                                    <div style="margin-bottom: 15px;" align="center">
+                                        <img class="img-responsive"
+                                             src="__PUBLIC__/home/images/about.jpg" alt=""/>
+                                    </div>
+                                    <p style="text-indent: 2em">
+                                        顺德职业技术学院成立于2014年1月，由中国烹饪协会、顺德区政府、顺德职业技术学院共同挂牌组建，旨在为传承、发扬、创新博大精深、内涵丰富的中国饮食文化，培养综合素质高、实践能力强的中国烹饪专业人才，促使中国餐饮企业走向世界。
+                                    </p>
+
+                                    <p style="text-indent: 2em">
+                                        顺德职业技术学院将已经有的烹饪工艺与烹饪营养、公共营养、餐饮管理、酒店管理4个专业方向纳入中国烹饪学院，未来中国烹饪学院将形成以烹饪为中心的系统学科群，进行八大菜系研究并进行网络教学推广，使我国烹饪教育呈现出多层次、多格局、国际化发展。
+                                    </p>
+
+                                </div>
+                                <!-- End page-content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-inner-warp" style="padding-top: 0">
+                        <div class="tab-inner">
+                            <div id="contact" class="row" style="margin-bottom: 20px">
+                                <div class="page-content">
+                                    <div class="boxedtitle page-title"><h2>联系我们</h2></div>
+
+                                    <div class="widget widget_contact">
+                                        <ul>
+                                            <li><p>顺德职业技术学院</p>
+                                                <br>
+                                                <i class="fa fa-map-marker"></i>地址 :<p>顺德大良德胜东路顺德职业技术学院学术交流中心二楼</p>
+                                            </li>
+                                            <li><i class="fa fa-phone"></i>电话 :<p><a href="tel:0757-22328957">0757-22328957 </a><a
+                                                    href="tel:18666558282">18666558282</a></p></li>
+                                            <li><i class="fa fa-envelope-o"></i>E-mail :<p><a
+                                                    href="mailto:1654390788@qq.com">1654390788@qq.com</a>
+                                            </p></li>
+                                            <li>
+                                                <i class="fa fa-share-square-o "></i>社交链接 :
+                                                <p>
+                                                    <a href="http://weibo.com/u/5721502570/home?topnav=1&wvr=6" original-title="微博" class="tooltip-n">
+											<span class="icon_i">
+												<span class="icon_square" icon_size="25" span_bg="#3b5997"
+                                                      span_hover="#2f3239">
+													<i i_color="#FFF" class="fa fa-wechat"></i>
+												</span>
+											</span>
+                                                    </a>
+                                                    <a  original-title="微信:xueyan3210" class="tooltip-n" href="javascript:;">
+											<span class="icon_i">
+												<span class="icon_square" icon_size="25" span_bg="#00baf0"
+                                                      span_hover="#2f3239">
+													<i i_color="#FFF" class="fa fa-weibo"></i>
+												</span>
+											</span>
+                                                    </a>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div id="allmap">
+                                    </div>
+                                </div>
+                                <!-- End page-content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-inner-warp" style="padding-top: 0">
+                        <div class="tab-inner">
+                            <div id="feedback" class="row" style="margin-bottom: 20px;">
+                                <div class="page-content">
+                                    <div class="boxedtitle page-title"><h2>意见反馈</h2></div>
+
+                                    <p>尊敬的客户:<br>为使您的留言信息更加有效提交给我们，请务必把资料完善填写，非常感谢您的留言!</p>
+
+                                    <form class="form-style form-style-3 form-style-5 form-js"
+                                          action=""
+                                          method="post">
+                                        <div class="form-inputs clearfix">
+                                            <notempty name="Think.session.cooking_user_id">
+                                                {$Think.session.cooking_user_name}
+                                                <else/>
+                                                <p>
+                                                    <label for="name" class="required">姓名<span>*</span></label>
+                                                    <input type="text" class="required-item" value="" name="name"
+                                                           id="name"
+                                                           aria-required="true">
+                                                </p>
+
+                                                <p>
+                                                    <label for="mail" class="required">邮箱<span>*</span></label>
+                                                    <input type="email" class="required-item" id="mail" name="mail"
+                                                           value=""
+                                                           aria-required="true">
+                                                </p>
+                                            </notempty>
+                                        </div>
+                                        <div class="form-textarea">
+                                            <p>
+                                                <label for="message" class="required">内容<span>*</span></label>
+                                    <textarea id="message" class="required-item" name="message" aria-required="true"
+                                              cols="58" rows="7"></textarea>
+                                            </p>
+                                        </div>
+                                        <p class="form-submit">
+                                            <input type="hidden" name="user_id" value="{$Think.session.cooking_user_id}"/>
+                                            <input type="hidden" name="user_name" value="{$Think.session.cooking_user_name}"/>
+                                            <input name="submit" type="submit" value="提交"
+                                                   class="submit button small color">
+                                        </p>
+                                    </form>
+                                </div>
+                                <!-- End page-content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-inner-warp" style="padding-top: 0">
+                        <div class="tab-inner">
+                            <div id="business" class="row" style="margin-bottom: 20px">
+                                <div class="page-content">
+                                    <div class="boxedtitle page-title"><h2>商务合作</h2></div>
+                                    <p>
+                                        广东顺德创业培训学院，作为顺德职业技术学院的二级学院，依托其丰富优质的办学资源，现联同中国烹饪协会南方培训基地（中国烹饪学院）开设烹饪工艺与营养专业，面向全国招生。</p>
+
+                                    <p>
+                                        中国烹饪协会南方培训基地（中国烹饪学院），由中国烹饪协会、顺德区政府、顺德职业技术学院于2014年1月20日挂牌成立，在推广“顺德——世界美食之都”的基础上，承担餐饮烹饪行业高端人才培养的重任：引用和创新德国“双元制”高等职业教育模式和中国餐饮业职业经理人课程体系，树立餐饮职业教育的标杆</p>
+
+                                    <p>为此，政府与学校专门投入资金2500万元人民币建成总面积近8000m2的烹饪实训中心。</p>
+
+                                    <p>
+                                        该实训中心是集中餐烹饪、西餐烹饪、烹饪创新研发和餐旅一体化体验活动、大型烹饪技术技能大赛等功能的烹饪实训基地，可同时容纳450位学员进行烹饪（工位岗位）实训学习活动及大型烹饪技术技能竞赛活动。</p>
+
+                                    <p>
+                                        烹饪工艺与营养专业，创办于2007年，是学院重点打造的特色专业之一，2013年通过国家教育部、财政部支持高等职业学校提升专业服务产业发展能力的国际化特色专业的验收。</p>
+                                    <h5>1、国际合作办学现状</h5>
+
+                                    <p>与德国F+U教育集团合作，组织学生赴德国实习</p>
+
+                                    <p>与英国洲际酒店集团合作共建“洲际酒店集团英才培养学院”</p>
+
+                                    <p>与美国罗瑞特集团旗下的瑞士格里昂高等教育学院合作，共建中欧国际酒店管理教育中心</p>
+
+                                    <p>在马来西亚UCSI大学成立顺峰烹饪学院</p>
+
+                                    <p>与美国饭店协会教育学院签约成为其全球联盟学校</p>
+
+                                    <p>成立美国饭店协会国际酒店职业资格（顺德）认证中心</p>
+                                    <h5>2、参与国际化大型餐饮项目，协同育人</h5>
+
+                                    <p>专业师生参加2008年北京奥运会、2010年广州亚运会、2010年上海世博会、2011年世界大学生运动会等国际化餐饮服务。</p>
+                                </div>
+                                <a href="tel">合作电话：0757-2929455/18900000000</a><br/>
+                                <a href="mailto">邮箱联系：xiaoluapp@163.com</a><br/>
+                                <a href="#">联系人：冯生</a>
+                                <!-- End page-content -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-inner-warp" style="padding-top: 0">
+                        <div class="tab-inner">
+                            <div id="recruit" class="row" style="margin-bottom: 20px">
+                                <div class="page-content page-shortcode">
+                                    <div class="boxedtitle page-title"><h2>人才招聘</h2></div>
+                                    <div class="accordion toggle-accordion">
+                                        <h4 class="accordion-title"><a href="#">储备干部</a></h4>
+
+                                        <div class="accordion-inner">
+                                            <h5>工作内容/职位描述：</h5>
+
+                                            <p>1、通过在车间相关部门进行实习后，结合实习表现、个人发展意愿以及公司的岗位空缺进行定岗。 </p>
+
+                                            <p>
+                                                2、定岗方向：电机工艺员、设备管理员、工装设计员、电工维修员等。其中，电机工艺员分为串激电机方向、机加方向、SY电机方向、定子方向、新型电机等方向。</p>
+                                            <h5>任职资格：</h5>
+
+                                            <p>1、大专以上学历，电气工程及其自动化、机械设计制造及其自动化、材料成型及控制工程、机电一体化、数控、模具、计算机类专业优先； </p>
+
+                                            <p>2、有电机行业实习经验者优先； </p>
+
+                                            <p>3、熟练使用office和CAD、三维绘图软件； </p>
+
+                                            <p>4、具有较强的沟通协调能力。思路开阔，善于总结、分析， 有较强的归纳能力。 </p>
+                                        </div>
+                                        <h4 class="accordion-title"><a href="#">人力资源实习生</a></h4>
+
+                                        <div class="accordion-inner">
+                                            <h5>工作内容/职位描述：</h5>
+
+                                            <p>1、整理并发布招聘岗位需求；</p>
+
+                                            <p>2、协助筛选简历并组织安排面试； </p>
+
+                                            <p>3、协助开拓、管理招聘渠道及供应商； </p>
+
+                                            <p>4、负责办理相关人事手续及档案、合同等人事管理； </p>
+
+                                            <p>5、负责eHR系统基础人事信息维护。 </p>
+                                        </div>
+                                        <h4 class="accordion-title"><a href="#">英语翻译实习生</a></h4>
+
+                                        <div class="accordion-inner">
+                                            <h5>工作内容/职位描述：</h5>
+
+                                            <p>1、 对接对标中心咨询方美国专家的翻译，协助美的方工程师与美国专家交流； </p>
+
+                                            <p>2、 将对标中心咨询方的相关技术文件转换成中文；</p>
+                                            <h5>任职资格：</h5>
+
+                                            <p>1、本科在读、研究生在读，机械类专业/英语类专业 </p>
+
+                                            <p>2、实习时间：5月底-10月； </p>
+
+                                            <p>3、精通英语，具备很强的听、说、读、写能力，机械类专业过六级，英语类专业过专八。 </p>
+
+                                            <p>4、具备较强的沟通能力、承压能力。 </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End page-content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-inner-warp" style="padding-top: 0">
+                        <div class="tab-inner">
+                            <div id="technology" class="row">
+                                <div class="page-content page-shortcode">
+                                    <div class="boxedtitle page-title"><h2>技术支持</h2></div>
+                                    <p><span class="dropcap"><img class="img-responsive"
+                                                                  src="http://www.xiaolu.co//Public/assets/global/imgs/logo4.png"
+                                                                  alt=""/></span>佛山市小鹿网络科技有限公司成立于2010年，致力为佛山企业结合本土优势与移动互联网，提供完整的转型升级解决方案。主要业务范围：App开发、网站开发、易订货等。<br>
+                                        我们的使命：帮助降低用户使用移动互联网技术的成本，让技术成为他们的竞争优势。我们相信最好的方式就是保持独立，虽然我不能保证最后我们会真正的成功，但那是我们的目标，我们也计划会长期为此而奋斗，越长期越好。
+                                    </p>
+                                </div>
+                                <!-- End page-content -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Tabs Vertical -->
+            </div>
+            <!-- End page-content -->
+        </div>
+    </section>
+    <!-- End container -->
+</block>
+<block name="extraJs2">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZmGu44xNFljnHUsDRuqT7ZsQ"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+</block>
+<block name="myJs">
+    <script>
+        // 百度地图API功能
+        var map = new BMap.Map('allmap');
+        var poi = new BMap.Point(113.331447, 22.815093);
+        map.centerAndZoom(poi, 13);
+        map.enableScrollWheelZoom();
+
+        var content1 = '<div style="margin:0;line-height:20px;padding:2px;">' +
+                '<img src="../img/baidu.jpg" alt="" style="float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;"/>' +
+                '地址：顺德大良德胜东路顺德职业技术学院学术交流中心二楼（顺德职业技术学院）<br/>电话：0757-22328957 18666558282<br/>简介：中国烹饪学院' +
+                '</div>';
+        var data_info = [[113.331447, 22.815093, content1]
+        ];
+
+        //创建检索信息窗口对象
+        var searchInfoWindow = null;
+        for (var i = 0; i < data_info.length; i++) {
+
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0], data_info[i][1]));  // 创建标注
+            map.addOverlay(marker);               // 将标注添加到地图中
+            addClickHandler(marker, data_info[i][2]);
+        }
+
+        jQuery(document).ready(function () {
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+        });
+        function addClickHandler(marker, content) {
+            marker.addEventListener("click", function (e) {
+                searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+                    title: "中国烹饪学院",      //标题
+                    width: 290,             //宽度
+                    height: 105,              //高度
+                    panel: "panel",         //检索结果面板
+                    enableAutoPan: true,     //自动平移
+                    searchTypes: [
+                        BMAPLIB_TAB_SEARCH,   //周边检索
+                        BMAPLIB_TAB_TO_HERE,  //到这里去
+                        BMAPLIB_TAB_FROM_HERE //从这里出发
+                    ]
+                });
+                searchInfoWindow.open(marker);
+            });
+        }
+    </script>
+</block>

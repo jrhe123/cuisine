@@ -1,0 +1,127 @@
+<extend name="Public:parent"/>
+<block name="extraStyle">
+    <style>
+        .tab-inner-warp p {
+            text-indent: 2em;
+        }
+
+        .current-page {
+            display: unset;
+        }
+
+        article table td ,article table tr{
+            border: 1px solid #000000 !important;
+        }
+    </style>
+</block>
+<block name="extraSlides"></block>
+<block name="extraContent">
+    <div class="page-title">
+        <!--<img class="img-responsive" src="__PUBLIC__/home/images/5.jpg">-->
+        <section class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="crumbs">
+                        <a href="#">首页</a>
+                        <span class="crumbs-span">/</span>
+                        <span class="current-page">
+                            <a href="{:U('Train/index')}">
+                                <if condition="$column eq 0">
+                                    烹饪工艺与营养
+                                    <else/>
+                                    分享课程
+                                </if>
+                            </a>
+                        </span>
+                        <span class="crumbs-span">/</span>
+                        <span class="current-page">{$title}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- End row -->
+        </section>
+        <!-- End container -->
+    </div>
+    <!-- End breadcrumbs -->
+
+    <section class="container main-content page-full-width">
+        <div class="row">
+            <div class="col-md-12">
+                <article class="post clearfix">
+                    <div class="post-inner">
+                        <div class="flexslider blog_silder margin_b_20 post-img">
+                            <ul class="slides">
+                                <foreach name="pictures" item="pic">
+                                    <li><img class="img-responsive" src="{$pic}" alt=""></li>
+                                </foreach>
+                            </ul>
+                        </div>
+                        <!-- End flexslider -->
+                        <div class="tabs-warp">
+                            <ul class="tabs">
+                                <li class="tab"><a href="#"><i class="fa fa-copy"></i>培训大纲</a></li>
+                                <!--<li class="tab"><a href="#"><i class="fa fa-file-text-o"></i>课程内容</a></li>-->
+                            </ul>
+                            <div class="tab-inner-warp">
+                                <div class="tab-inner">
+                                    <notempty name="course_price">
+                                        <h5>培训收费</h5>
+                                        <p><span class="price">{$course_price}</span></p>
+                                    </notempty>
+
+                                    <article>
+                                        {$description|htmlspecialchars_decode}
+                                    </article>
+
+                                </div>
+                            </div>
+                            <!--<div class="tab-inner-warp">-->
+                            <!--<div class="tab-inner">-->
+                            <!---->
+
+                            <!--</div>-->
+                            <!--</div>-->
+                            <notempty name="vurl">
+                                <if condition="$is_audit eq 0">
+                                    <embed class="col-md-12" src="{$vurl}" allowFullScreen="true" quality="high" width="100%" height="700" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+                                </if>
+                            </notempty>
+                        </div>
+                        <if condition="$is_audit eq 1">
+                            <a class="button large green-button col-md-12 col-xs-12 t_center" href="javascript:;" onclick="jump()"
+                               style="">在线报名</a>
+                        </if>
+                    </div>
+                    <!-- End post-inner -->
+                </article>
+                <!-- End article.post -->
+
+            </div>
+            <!-- End main -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="myJs">
+    <script>
+        var current_user_id = '{$Think.session.cooking_user_id}';
+        var current_r_user_name = '{$Think.session.cooking_r_user_name}';
+        jQuery(document).ready(function () {
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+        });
+        function jump(){
+            if(current_user_id == ''){
+                toastMsg('warning','请先登录','操作提示');
+            }else if(current_r_user_name == ''){
+                toastMsg('warning','请先补全个人资料','操作提示');
+            }else{
+                window.location.href='{:U("Train/apply")}?id={$Think.get.id}';
+            }
+        }
+
+    </script>
+</block>

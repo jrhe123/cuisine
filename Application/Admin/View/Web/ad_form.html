@@ -1,0 +1,237 @@
+<extend name="Common:parent"/>
+<block name="extraCss">
+    <link href="__PUBLIC__/global/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/select2/select2.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/icheck/skins/all.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="__PUBLIC__/global/plugins/kindeditor/themes/default/default.css"/>
+</block>
+<block name="extraStyle">
+    <style>
+        .attachment-item {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .pictures img {
+            width: 100%;
+        }
+
+        .pictures p {
+            text-align: center;
+        }
+
+        .pictures .col-md-3 {
+            padding-left: 0px;
+        }
+
+        .pictures .icon-btn {
+            height: auto;
+            margin: 0px;
+            min-width: 100%;
+            padding: 0px;
+        }
+
+        .pictures .badge {
+            padding: 0px;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</block>
+<block name="content">
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet box blue-hoki">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="{$menu_icon}"></i> {$menu_name}
+                    </div>
+                    <div class="tools">
+                        <eq name="Think.get.action" value="view">
+                            <div class="tools">
+                                <a href="{:U('edit')}?id={$id}" class="btn btn-xs yellow margin-right-10"><i
+                                        class="fa fa-edit"></i> 编辑</a>
+                            </div>
+                        </eq>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="portlet-body form">
+                        <form id="form" class="form-horizontal form-bordered" role="form" onsubmit="return false">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label">广告图片</label>
+
+                                    <div class="pictures sliderImages" style="padding-left: 0px;">
+                                        <if condition="isset($hrefArr)">
+                                            <foreach name="hrefArr" item="image">
+                                                <div class="col-md-3 picture-item">
+                                                    <a class="icon-btn" href="javascript:;">
+                                                        <img src="/Public/{$image.image}">
+														<span class="badge badge-danger" onclick="delPicture(this)"> <i
+                                                                class="fa fa-times"></i> </span>
+                                                        <input type="hidden" name="sliderImage[]"
+                                                               value="{$image.image}">
+                                                    </a>
+                                                    <input name="sliderLink[]" class="form-control input-sm"
+                                                           value="{$image.link}"
+                                                           placeholder="图片的链接的地址">
+                                                </div>
+                                            </foreach>
+                                        </if>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                                    <div>
+                                        <!-- The fileinput-button span is used to style the file input field as button -->
+                                              <span class="btn green fileinput-button">
+                                                  <i class="fa fa-plus"></i>
+                                                  <span>添加图片</span>
+                                                  <input multiple type="file" name="pictures[]" id="picture">
+                                              </span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <font color="red">*</font>图片支持JPG、PNG、BMP格式，图片大小建议宽度保持在300像素、高度按比例缩放，大小不能超过1M
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">课程广告添加</label>
+                                    <div class="col-md-9" style="padding-bottom: 0px;">
+                                        <div class="col-md-2" style="padding-left: 0px; width: 200px;">
+                                            <include file="Common/singleImageUpload"
+                                                     field="banner"
+                                                     name="course_picture"
+                                                     tip=""
+                                                     picture_path="{$course_ad.path}"
+                                                     thumb="{$course_ad.url}"
+                                                     url="{:U('Upload/singlePicture')}?size=470-175"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-9" style="padding-top: 0px;">
+                                        <span class="help-block">图片支持JPG、PNG、BMP格式，图片大小建议保持在470*175像素，大小不能超过1M</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <neq name="Think.get.action" value="view">
+                                            <button type="submit" onclick="formSubmit()" class="btn green margin-right-10">保存</button>
+                                        </neq>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="extraJs">
+    <script src="__PUBLIC__/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/global/plugins/select2/select2.min.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-validation/js/jquery.validate.js"></script>
+    <script src="__PUBLIC__/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="__PUBLIC__/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="__PUBLIC__/global/scripts/datatable.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="__PUBLIC__/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+    <script src="__PUBLIC__/admin/pages/scripts/form-fileupload.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/global/plugins/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/global/plugins/kindeditor/lang/zh_CN.js"></script>
+    <script src="__PUBLIC__/global/plugins/icheck/icheck.min.js"></script>
+</block>
+<block name="myJs">
+    <script>
+        var id = '{$id}';
+        var action = '{$Think.get.action}';
+        jQuery(document).ready(function () {
+            $('.bs-select').selectpicker({
+                iconBase: 'fa',
+                tickIcon: 'fa-check'
+            });
+
+            if (action == 'view') {
+                $('.form-group').find('*').attr('disabled', 'disabled');
+            }
+
+
+
+            // 图片上传
+            $("#picture").fileupload({
+                autoUpload: true, // 是否自动上传
+                url: "{:U('Upload/singlePicture')}?300-0", // 上传地址
+                dataType: "json",
+                singleFileUploads: true,
+                add: function (e, data) {
+                    Metronic.blockUI({
+                        target: '#blockDiv',
+                        boxed: true,
+                        message: '正在上传...'
+                    });
+                    data.submit();
+                },
+                done: function (e, data) {
+                    Metronic.unblockUI('#blockDiv');
+                    if (data.result.code == 200) {
+                        toastMsg('success', '上传成功', '提示信息');
+                        $('.sliderImages').append(
+                                '<div class="col-md-3 picture-item">' +
+                                '<a class="icon-btn" href="javascript:;">' +
+                                '<img src="/Public/' + data.result.path + '">' +
+                                '<span class="badge badge-danger" onclick="delPicture(this)"> <i class="fa fa-times"></i> </span>' +
+                                '<input name="sliderLink[]" class="form-control input-sm" placeholder="图片的链接的地址">' +
+                                '</a>' +
+                                '<input type="hidden" name="sliderImage[]" value="' + data.result.path + '" ' +
+                                '</div>');
+                    } else {
+                        toastMsg('error', data.result.msg, '提示信息');
+                    }
+                }
+            });
+
+            $('.login-form input').keypress(function (e) {
+                if (e.which == 13) {
+                    formSubmit();
+                    return false;
+                }
+            });
+        });
+
+        // 提交
+        function formSubmit() {
+//            editor.sync();  //编辑器需调用这个来获取html
+            showBlockUI();
+            if ($('#form').validate().form()) {
+                $.post('{:U("save")}', $('#form').serialize(), function (data) {
+                    if (checkAjaxReturn(data)) {
+//                        setTimeout('goList()', 1000);
+                    }
+                    closeBlockUI();
+                }, 'json');
+            }
+        }
+
+        // 返回列表
+        function goList() {
+            window.location.href = "{:U('index')}";
+        }
+
+        // 删除图片
+        function delPicture(obj) {
+            $(obj).parents('div.picture-item').remove();
+        }
+    </script>
+</block>

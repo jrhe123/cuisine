@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.2.0
+Version: 3.3.0
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>{:C('admin_app_name')} | {$menu_name}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="__PUBLIC__/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="__PUBLIC__/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" />
+    <link href="__PUBLIC__/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="__PUBLIC__/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="__PUBLIC__/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet"/>
+    <block name="extraCss"></block>
+    <!-- BEGIN THEME STYLES -->
+    <link href="__PUBLIC__/global/css/components.css" rel="stylesheet" />
+    <link href="__PUBLIC__/global/css/plugins.css" rel="stylesheet" />
+    <link href="__PUBLIC__/admin/layout/css/layout.css" rel="stylesheet" />
+    <link href="__PUBLIC__/admin/layout/css/themes/default.css" rel="stylesheet"  id="style_color"/>
+    <link href="__PUBLIC__/admin/layout/css/custom.css" rel="stylesheet" />
+    <link href="__PUBLIC__/admin/pages/css/font.css" rel="stylesheet" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <block name="extraStyle"></block>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-quick-sidebar-over-content page-header-fixed page-sidebar-fixed page-footer-fixed">
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="javascript:void(0);">
+                <img class="logo-default" style="height: 35px; margin-top: 5px;" src="__PUBLIC__/admin/layout/img/logo.png" />
+            </a>
+
+            <div class="menu-toggler sidebar-toggler hide">
+                <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+            </div>
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:void(0);" class="menu-toggler responsive-toggler" data-toggle="collapse"
+           data-target=".navbar-collapse">
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+    </div>
+    <!-- END HEADER INNER -->
+    <!-- BEGIN TOP NAVIGATION MENU -->
+    <div class="top-menu">
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown dropdown-user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                   data-close-others="true">
+              <span class="username username-hide-on-mobile">
+              系统 </span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-default">
+                    <li>
+                        <a href="{:U('Login/out')}">
+                            <i class="icon-key"></i> 登出 </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- END HEADER -->
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar-wrapper">
+        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+        <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                <li class="sidebar-toggler-wrapper">
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler">
+                    </div>
+                    <!-- END SIDEBAR TOGGLER BUTTON -->
+                </li>
+                <li class="sidebar-search-wrapper" style="margin-top: 30px;">
+
+                </li>
+                {$leftMenuHtml}
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                <block name="title">{$menu_name}</block>
+                <small>{$menu_name}</small>
+                <block name="addBtn"></block>
+                <!--<a href="{:U('add')}" class="btn blue">添加</a>-->
+            </h3>
+            <div class="page-bar">
+                {$navHtml}
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row">
+                <div class="col-md-12">
+                    <block name="content"></block>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<div class="page-footer">
+    <div class="page-footer-inner"> 2014 © 小鹿网络科技有限公司.</div>
+    <div class="scroll-to-top" style="display: block;">
+        <i class="icon-arrow-up"></i>
+    </div>
+</div>
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/global/plugins/respond.min.js"></script>
+<script src="__PUBLIC__/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<script src="__PUBLIC__/global/plugins/jquery.min.js"></script>
+<script src="__PUBLIC__/global/plugins/jquery-migrate.min.js"></script>
+<script src="__PUBLIC__/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/global/plugins/jquery.cokie.min.js"></script>
+<script src="__PUBLIC__/global/plugins/jquery.blockui.min.js"></script>
+<script src="__PUBLIC__/global/plugins/uniform/jquery.uniform.min.js"></script>
+<script src="__PUBLIC__/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- END CORE PLUGINS -->
+<script src="__PUBLIC__/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+<block name="extraJs"></block>
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="__PUBLIC__/global/scripts/metronic.js"></script>
+<script src="__PUBLIC__/admin/layout/scripts/layout.js"></script>
+<script src="__PUBLIC__/admin/custom/js/init.js"></script>
+<script src="__PUBLIC__/admin/custom/js/functions.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core components
+        Layout.init(); // init current layout
+    });
+</script>
+<block name="myJs"></block>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

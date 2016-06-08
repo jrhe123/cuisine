@@ -1,0 +1,384 @@
+<extend name="Public:parent"/>
+<block name="extraStyle">
+    <style>
+        .question .tag {
+            margin-left: 101px;
+        }
+
+        .zm-topic-cat-main li.current_topic a {
+            background: #259 none repeat scroll 0 0;
+            border-color: #259;
+            color: #fff;
+        }
+    </style>
+</block>
+
+
+<block name="extraSlides"></block>
+<!-- End section-warp -->
+<block name="extraContent">
+    <section style="margin-top: 50px;margin-bottom: 100px;" class="container main-content">
+        <div class="row">
+            <div class="col-md-9">
+
+                <div class="tabs-warp question-tab">
+                    <ul class="tabs">
+                        <li class="tab"><a href="#" class="all current">最新动态</a></li>
+                        <li class="tab"><a href="#" class="blog-1">话题广场</a></li>
+
+                    </ul>
+                    <div class="tab-inner-warp">
+                        <div class="tab-inner posts">
+
+                        </div>
+                    </div>
+                    <div class="tab-inner-warp">
+                        <ul class="zm-topic-cat-main clearfix">
+                            <li data-id="0" class="current_topic"><a href="#all">全部</a></li>
+                            <foreach name="topic_screen" item="v">
+                                <li data-id="{$v.id}"><a href="#{$v.name}">{$v.name}</a></li>
+                            </foreach>
+                        </ul>
+                        <div class="tab-inner posts">
+                        </div>
+                    </div>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End main -->
+            <aside class="col-md-3 sidebar">
+
+                <div class="widget widget_highest_points">
+                    <h3 class="widget_title">排行榜</h3>
+                    <ul>
+                        <foreach name="ranking" item="v">
+                            <li>
+                                <div class="author-img">
+                                    <a href="#"><img width="60" height="60"
+                                                     src="{$v.picture}" alt=""></a>
+                                </div>
+                                <h6><a href="{:U('Profile/index')}?id={$v.id}">{$v.nickname}</a></h6>
+                                <span class="comment">{$v.point} 分</span>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3 class="widget_title">最近问题</h3>
+                    <ul class="related-posts">
+                        <foreach name="latest_problem" item="v">
+                            <li class="related-item">
+                                <h3><a href="{:U('Index/detail')}?id={$v.id}">{$v.title}</a></h3>
+
+                                <p>{$v.content}</p>
+
+                                <div class="clear"></div>
+                                <span>{$v.updated_timestamp}</span>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+                <notempty name="hrefArr">
+                    <include file="Public/ad" />
+                </notempty>
+            </aside>
+            <!-- End sidebar -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="myJs">
+    <script>
+        var curPage = 1;
+        var html = '';
+        var commenthtml = '';
+        var ahtml = '';
+        var chtml = '';
+        var next = false;
+        var current_user_id = '{$Think.session.cooking_user_id}';
+        var current_user_name = '{$Think.session.cooking_user_name}';
+        var reply_to_user_id = '';
+        var zm_comment_editable = '';
+        var comment_post_id = '';
+        jQuery(document).ready(function () {
+            loadMore(false);
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+
+            $('.tab').click(function () {
+                html = '';
+                curPage = 1;
+                loadMore(false);
+            });
+
+        });
+
+        function loadMore(n) {
+            if (n == true) {
+                next = true;
+                curPage = curPage * 1 + 1;
+            }
+            setTimeout(function () {      // <-- Simulate network congestion, remove setTimeout from production!
+                $.ajax({
+                    type: "post",
+                    data: {
+                        page: curPage
+                    },
+                    url: "{:U('dataList')}",
+                    success: function (data) {
+                        if (data.data.length !== 0 && data.curPage != 1 && next != true) {
+                            curPage = curPage * 1 + 1;
+                        }
+                        $.each(data.data, function (k, v) {
+                            html += '<article class="question question-type-normal topic topic_' + v.topic + '">' +
+                            '<p class="tag">【' + v.class_name + '】' + v.tags + '</p>' +
+                            '<h2>' +
+                            '<a href="{:U("Index/detail")}?id=' + v.id + '">' + v.title + '</a>' +
+                            '</h2>' +
+                            '<a class="question-report" href="{:U("Index/detail")}?id=' + v.id + '">回复</a>' +
+                            '<div class="question-author">' +
+                            '<a href="#" original-title="' + v.nick_name + '" class="question-author-img tooltip-n"><span></span>' +
+                            '<img alt="" src="' + v.head_img + '"></a>' +
+                            '</div>' +
+                            '<div class="question-inner">' +
+                            '<div class="clearfix"></div>' +
+                            '<p class="question-desc summary">' + v.content_m +
+                            '<span>[...]</span> <a class="toggle-expand" href="javascript:;">显示全部</a>' +
+                            '</p>' +
+                            '<div class="question-desc content" style="display: none;">' + v.content +
+                            '</div>' +
+                            '<span onclick="comment(this)" class="question-comment" value="' + v.id + '"><a href="javascript:;"><i class="fa fa-comment"></i>' + v.replies + ' 回复</a></span>' +
+                            '<div class="question-details">' +
+                            '<span class="question-favorite"><i class="fa fa-star"></i>' + v.collect + '</span>' +
+                            '</div>' +
+                            '<span class="question-category"><a href="javascript:;" onclick="likePost(' + v.id + ',this)">' + v.like_html + '</a></span>' +
+                            '<span class="question-date"><i class="fa fa-clock-o"></i>' + v.minute + '</span>' +
+                            '<span class="question-view"><i class="fa fa-user"></i>' + v.views + ' 阅读</span>' +
+                            '<span class="question-pack" style="display: none;"><a href="javascript:;">' +
+                            '<i class="fa fa-upload"></i>收起</a></span>' +
+                            '<div class="clearfix"></div>' +
+                            '<div data-count="22" class="zm-comment-box" style="display: none;">' +
+                            '<i class="icon icon-spike zm-comment-bubble" style="display: inline; left: 17px;"></i>' +
+                            '<a name="comment-0" class="zg-anchor-hidden"></a>' +
+                            '<div class="zm-comment-list">' +
+
+                            '</div>' +
+                            '<div class="zm-comment-form zm-comment-box-ft">' +
+                            '<div contenteditable="true" class="zm-comment-editable editable"aria-label="写下你的评论…"><p style="color:#999">写下你的评论…</p></div>' +
+                            '<div class="zm-command zg-clear">' +
+                            '<a class="zg-right zg-btn-blue" onclick="reply(' + v.id + ',this)" name="addnew" href="javascript:;">评论</a>' +
+                            '<a class="zm-command-cancel" name="closeform" href="javascript:;">取消</a>' +
+                            '</div>' +
+                            '<div class="zm-comment-info">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div></article>';
+                        });
+                        if (data.data.length !== 0) {
+                            ahtml = '';
+                            if (data.data.length >= 8) {
+                                ahtml = '<a href="javascript:;" onclick="loadMore(true)" class="load-questions"><i class="fa fa-refresh"></i>加载更多</a>';
+                            }
+                            $('.posts').html('');
+                            $('.posts').append(html + ahtml);
+                            next = false;
+                            toggle_expand();
+                            toggle_topic();
+                            jQuery(".tooltip-n").tipsy({fade: true, gravity: "s"});
+                        } else {
+                            toastMsg('warning', '没有更多数据', '操作提示');
+                        }
+                    },
+                    error: function () {
+                        toastMsg('warning', '您操作得太快了，数据加载不过来', '操作提示');
+                    }
+                });
+            }, 500);
+        }
+
+        function toggle_expand() {
+            $('.question-inner').each(function () {
+                $(this).find('.toggle-expand').click(function () {
+                    $(this).parents().siblings('.content').removeAttr('style');
+                    $(this).parents().siblings('.question-pack').removeAttr('style');
+                    $(this).parent().hide();
+                });
+                $(this).find('.question-pack').click(function () {
+                    $(this).siblings('.content').hide();
+                    $(this).siblings('.summary').show();
+                    $(this).hide();
+
+                });
+            });
+        }
+
+        function toggle_topic() {
+            $('.zm-topic-cat-main').find('li').click(function () {
+                var topic_id = $(this).attr('data-id');
+                $('.zm-topic-cat-main').find('li').removeClass('current_topic');
+                $(this).addClass('current_topic');
+                $('.topic').hide();
+                $('.topic_' + topic_id).show();
+                if (topic_id == 0) {
+                    $('.topic').show();
+                }
+            });
+        }
+
+        function comment(obj) {
+            commenthtml = '';
+            comment_post_id = $(obj).attr('value');
+            if ($(obj).siblings('.zm-comment-box').attr('style')) {
+                $(obj).siblings('.zm-comment-box').removeAttr('style');
+                commentData();
+            } else {
+                $(obj).siblings('.zm-comment-box').css('display', 'none');
+            }
+            $('.zm-comment-editable').focusin(function () {
+                $(this).html(zm_comment_editable);
+                $(this).parent().addClass('expanded');
+            });
+            $('.zm-command-cancel').click(function () {
+                $(this).parents('.zm-comment-form').removeClass('expanded');
+                $(this).parents().prev('.zm-comment-editable').html('<p style="color:#999">写下你的评论…</p>');
+            });
+        }
+
+        function commentData() {
+            $.ajax({
+                type: "post",
+                data: {
+                    page: curPage,
+                    post_id: comment_post_id
+                },
+                url: "{:U('commentDataList')}",
+                success: function (data) {
+                    if (data.data.length !== 0 && data.curPage != 1) {
+                        curPage = curPage * 1 + 1;
+                    }
+                    $.each(data.data, function (k, v) {
+                        commenthtml += '<div data-id="' + v.id + '" class="zm-item-comment">' +
+                        '<a name="comment-' + v.id + '" class="zg-anchor-hidden"></a>' +
+                        '<a href="/people/action-double-51" class="zm-item-link-avatar" data-tip="p$t$action-double-51" data-original_title="' + v.from_user_name + '">' +
+                        '<img class="zm-item-img-avatar" src="' + v.from_user_header_img + '">' +
+                        '</a>' +
+                        '<div class="zm-comment-content-wrap">' +
+                        '<div class="zm-comment-hd">' +
+                        '<a class="zg-link" href="{:U("Profile/index")}?user_id=' + v.from_user_id + '" data-original_title="' + v.from_user_name + '">' + v.from_user_name + '</a> <span class="desc">' + v.author + '</span> ' +
+                        ' <span class="desc"> 回复 </span><a title="' + v.to_user_name + '" class="zg-link" href="{:U("Profile/index")}?user_id=' + v.to_user_id + '">' + v.to_user_name + '</a>' +
+                        '</div>' +
+                        '<div class="zm-comment-content">' +
+                        v.content +
+                        '</div>' +
+                        '<div class="zm-comment-ft">' +
+                        '<span class="date">' + v.created_timestamp + '</span>' +
+                        '<a name="reply_comment" class="reply zm-comment-op-link" href="javascript:;" onclick="reply_to(' + v.from_user_id + ',this)">' +
+                        '<i class="zg-icon zg-icon-comment-reply"></i>回复</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                    });
+                    if (data.data.length !== 0) {
+                        chtml = '<a name="load-more" class="load-more" href="{:U("Index/detail")}?id=' + comment_post_id + '">' +
+                        '<span class="text">显示全部评论<i class="spinner spinner-gray"></i></span>' +
+                        '</a>';
+                        $('.question-comment[value="' + comment_post_id + '"]').siblings('.zm-comment-box').find('.zm-comment-list').html('');
+                        $('.question-comment[value="' + comment_post_id + '"]').siblings('.zm-comment-box').find('.zm-comment-list').append(commenthtml + chtml);
+                    } else {
+//                                toastMsg('warning', '没有回复', '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了，数据加载不过来', '操作提示');
+                }
+            });
+        }
+
+        function reply(id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            var content = $(obj).parent().prev('.zm-comment-editable').html();
+            $.ajax({
+                type: "post",
+                data: {
+                    post_id: id,
+                    from_user_id: current_user_id,
+                    to_user_id: reply_to_user_id,
+                    content: content
+                },
+                url: "{:U('Action/reply')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        commenthtml = '';
+                        commentData();
+                        $(obj).next().click();
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+        function reply_to(t_id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            var t_name = $(obj).parents('.zm-item-comment').find('.zm-item-link-avatar').attr('data-original_title');
+            if (current_user_id == t_id) {
+                reply_to_user_id = '';
+                zm_comment_editable = current_user_name + ':';
+                $(obj).parents('.zm-comment-box').find('.zm-comment-editable').html(current_user_name + ':');
+            } else {
+                reply_to_user_id = t_id;
+                zm_comment_editable = current_user_name + ':@' + t_name + '';
+                $(obj).parents('.zm-comment-box').find('.zm-comment-editable').html(current_user_name + ':@' + t_name);
+            }
+        }
+
+        function likePost(id, obj) {
+            if (current_user_id == '') {
+                toastMsg('warning', '请先登录', '操作提示');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                data: {
+                    post_id: id,
+                    user_id: current_user_id
+                },
+                url: "{:U('Action/likePosts')}",
+                success: function (data) {
+                    if (data.code == 200) {
+                        toastMsg('success', data.msg, '操作提示');
+                        if (data.ulike == 1) {
+                            $(obj).html('<i class="fa fa-thumbs-o-down"></i>取消点赞');
+                        } else if (data.ulike == 2) {
+                            $(obj).html('<i class="fa fa-thumbs-o-up"></i>点赞');
+                        }
+                    } else if (data.code == 400) {
+                        toastMsg('error', data.msg, '操作提示');
+                    } else if (data.code == 401) {
+                        toastMsg('warning', data.msg, '操作提示');
+                    }
+                },
+                error: function () {
+                    toastMsg('warning', '您操作得太快了', '操作提示');
+                }
+            });
+        }
+
+    </script>
+</block>

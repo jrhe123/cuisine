@@ -1,0 +1,149 @@
+<extend name="Public:parent"/>
+<block name="extraCss">
+    <link href="__PUBLIC__/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
+</block>
+
+<block name="extraSlides"></block>
+
+<block name="extraContent">
+    <section style="margin-top: 50px;margin-bottom: 100px;" class="container main-content">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="page-content">
+                    <div class="boxedtitle page-title"><h2>个人设置</h2></div>
+
+                    <div class="form-style form-style-4">
+                        <form id="form" onsubmit="return false">
+                            <div class="form-inputs clearfix">
+                                <p>
+                                    <label>昵称</label>
+                                    <input value="{$nickname}" name="nickname" type="text">
+                                </p>
+
+                                <p>
+                                    <label class="required">真实姓名<span>*</span></label>
+                                    <input value="{$r_username}" name="r_username" type="text">
+                                </p>
+
+                                <p>
+                                    <label>电话</label>
+                                    <input value="{$phone}" name="phone" type="text">
+                                </p>
+
+                                <p>
+                                    <label>性别</label>
+                                    <span class="styled-select">
+										<select name="gender">
+                                            <option value="0">保密</option>
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
+									</span>
+                                </p>
+                            </div>
+                            <div class="form-style form-style-2">
+                                <div class="user-profile-img"><img src="{$head_img}"></div>
+                                <p class="user-profile-p">
+                                    <label>个人头像</label>
+
+                                <div class="fileinputs">
+                                    <input type="file" class="file" id="picture">
+                                    <input name="picture" type="hidden" value="{$picture}" />
+                                    <div class="fakefile">
+                                        <button type="button" class="button small margin_0">选择图片</button>
+                                        <span><i class="icon-arrow-up"></i>上传</span>
+                                    </div>
+                                </div>
+                                <p></p>
+
+                                <div class="clearfix"></div>
+                                <p>
+                                    <label>自我介绍</label>
+                                    <textarea name="signature" cols="58" rows="8">{$signature}</textarea>
+                                </p>
+                            </div>
+                            <p class="form-submit">
+                                <input name="id" type="hidden" value="{$id}"/>
+                                <input onclick="formSubmit()" type="submit" value="确认"
+                                       class="button color small login-submit submit">
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End main -->
+
+            <aside class="col-md-3 sidebar">
+                <div class="widget widget_stats">
+                    <h3 class="widget_title">个人操作</h3>
+
+                    <div class="ul_list ul_list">
+                        <ul>
+                            <li><i class="fa fa-file-o"></i><a href="{:U('Profile/draft')}?id={$Think.session.cooking_user_id}">我的草稿</a></li>
+                            <li><i class="fa fa-bookmark-o"></i><a href="{:U('Profile/course')}?id={$Think.session.cooking_user_id}">我的课程</a></li>
+                            <li><i class="fa fa-check-square-o"></i><a href="{:U('Profile/focus')}?id={$Think.session.cooking_user_id}">我的关注人</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <notempty name="hrefArr">
+                    <include file="Public/ad" />
+                </notempty>
+            </aside>
+            <!-- End sidebar -->
+        </div>
+        <!-- End row -->
+    </section>
+    <!-- End container -->
+</block>
+<block name="extraJs">
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+    <script src="__PUBLIC__/admin/pages/scripts/form-fileupload.js"></script>
+</block>
+<block name="myJs">
+    <script>
+        var blog = '{$blog}';
+        jQuery(document).ready(function () {
+            $(blog).click();
+            $(".link").on("click", function (event) {
+                event.preventDefault();//the default action of the event will not be triggered
+                $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+            });
+            $('select[name="gender"]').val('{$gender_n}');
+            // 图片上传
+            $("#picture").fileupload({
+                autoUpload: true, // 是否自动上传
+                url: "{:U('Upload/headimg')}", // 上传地址
+                dataType: "json",
+                singleFileUploads: true,
+                add: function (e, data) {
+                    data.submit();
+                },
+                done: function (e, data) {
+                    if (data.result.code == 200) {
+                        toastMsg('success', '上传成功', '提示信息');
+                        $('.user-profile-img').html('<img src="/./Public/' + data.result.path + '">');
+                        $('input[name="picture"]').val(data.result.path);
+                    } else {
+                        toastMsg('error', data.result.msg, '提示信息');
+                    }
+                }
+            });
+        });
+
+        // 提交
+        function formSubmit() {
+            $.post('{:U("edit")}', $('#form').serialize(), function (data) {
+                if (checkAjaxReturn(data)) {
+
+                }
+            }, 'json');
+        }
+    </script>
+</block>

@@ -1,0 +1,157 @@
+<extend name="Common:parent"/>
+<block name="extraCss">
+    <link href="__PUBLIC__/global/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/select2/select2.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
+</block>
+<block name="extraStyle">
+    <style>
+        .attachment-item {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+    </style>
+</block>
+<block name="content">
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet box blue-hoki">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="{$menu_icon}"></i> {$menu_name}
+                    </div>
+                    <div class="tools">
+                        <eq name="Think.get.action" value="view">
+                            <div class="tools">
+                                <a href="{:U('edit')}?id={$id}" class="btn btn-xs yellow margin-right-10"><i
+                                        class="fa fa-edit"></i> 编辑</a>
+                            </div>
+                        </eq>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="portlet-body form">
+                        <form id="form" class="form-horizontal form-bordered" onsubmit="return false" role="form">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">类别名称</label>
+
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" name="name" value="{$name}"
+                                               placeholder="必填"/>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                <!--<label class="col-md-3 control-label">企业状态</label>-->
+                                <!--<div class="col-md-7">-->
+                                <!--<input type="text" class="form-control" name="company_existence_status" value="{$company_existence_status}" />-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <neq name="Think.get.action" value="view">
+                                            <input type="hidden" name="id" value="{$id}">
+                                            <button type="submit" onclick="formSubmit()" class="btn green margin-right-10">保存</button>
+                                            <a href="javascript:goList();" class="btn red">取消</a>
+                                        </neq>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="extraJs">
+    <script src="__PUBLIC__/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="__PUBLIC__/global/plugins/select2/select2.min.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-validation/js/jquery.validate.js"></script>
+    <script src="__PUBLIC__/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="__PUBLIC__/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="__PUBLIC__/global/scripts/datatable.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script src="__PUBLIC__/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+    <script src="__PUBLIC__/admin/pages/scripts/form-fileupload.js"></script>
+</block>
+<block name="myJs">
+    <script>
+        var id = '{$id}';
+        var action = '{$Think.get.action}';
+        jQuery(document).ready(function () {
+
+            $('.bs-select').selectpicker({
+                iconBase: 'fa',
+                tickIcon: 'fa-check'
+            });
+
+
+            if (action == 'view') {
+                $('.form-group').find('*').attr('disabled', 'disabled');
+            }
+
+            $('#form').validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block', // default input error message class
+                focusInvalid: true, // do not focus the last invalid input
+                rules: {
+                    name: {required: true},
+                    messages: {
+                        name: {required: "请输入类别名称"}
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                                .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        label.closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+
+                    errorPlacement: function (error, element) {
+                        error.insertAfter(element.closest('.form-control'));
+                    },
+
+                    submitHandler: function (form) {
+                        formSubmit();
+                        return false;
+                    }
+                }
+            });
+        });
+
+        // 提交
+        function formSubmit() {
+//            editor.sync();  //编辑器需调用这个来获取html
+            showBlockUI();
+            if ($('#form').validate().form()) {
+                $.post('{:U("saveClassify")}', $('#form').serialize(), function (data) {
+                    if (checkAjaxReturn(data)) {
+                        setTimeout('goList()', 1000);
+                    }
+                    closeBlockUI();
+                }, 'json');
+            }
+        }
+
+        // 返回列表
+        function goList() {
+            window.location.href = "{:U('classify')}";
+        }
+    </script>
+</block>

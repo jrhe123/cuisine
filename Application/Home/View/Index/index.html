@@ -1,0 +1,368 @@
+<extend name="Public:parent"/>
+<block name="extraStyle">
+    <style>
+        @media (max-width: 992px) {
+            #myCarousel img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        @media (min-width: 457px) and (max-width: 767px) {
+            #myCarousel img {
+                width: 100%;
+                height: 680px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            #myCarousel img {
+                width: 100%;
+                height: 550px;
+            }
+        }
+    </style>
+</block>
+
+<block name="extraContent">
+    <section class="cooking-1" style="padding-bottom: 0">
+        <div class="container main-content ">
+            <div class="col-md-12 sale-product" style="padding-bottom: 60px;margin-bottom: 0;text-align: center;">
+
+                <h2 style="font-weight: normal">提供优质的高等学历教育资源与行业相关培训服务</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-5 col-md-5 no-padding" style="">
+                    <div class="content-slider" style="margin-bottom: 30px;">
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <div class="carousel-inner">
+                                <foreach name="course_article" item="v" key="k">
+                                    <if condition="$k eq 0">
+                                        <div class="item active">
+                                            <a href="{:U('Train/index')}"><img style=""
+                                                                               src="{$v.picture}"
+                                                                               class="img-responsive" alt=""></a>
+
+                                            <div class="carousel-caption">
+                                                <h4>{$v.title}</h4>
+
+                                                <p>{$v.description}</p>
+                                            </div>
+                                        </div>
+                                        <else/>
+                                        <div class="item">
+                                            <a href="{:U('Train/index')}"><img style=""
+                                                                               src="{$v.picture}"
+                                                                               class="img-responsive" alt=""></a>
+
+                                            <div class="carousel-caption">
+                                                <h4>{$v.title}</h4>
+
+                                                <p>{$v.description}</p>
+                                            </div>
+                                        </div>
+                                    </if>
+                                </foreach>
+                            </div>
+                            <!-- Carousel nav -->
+                            <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                            <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12 no-padding">
+                        <a target="_blank" class=" " href="javascript:;">
+                            <img class="img-responsive" style="width: 100%;"
+                                 src="{$course_ad}">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-7 col-md-7">
+                    <ul class="products col-3">
+                        <foreach name="course_two" item="v">
+                            <li class="product">
+
+                                <div class="product-container">
+
+                                    <a href="{:U('Train/article')}?id={$v.id}">
+
+                                        <img src="{$v.picture}" alt="">
+
+                                        <p class="title">{$v.title}</p>
+                                        <notempty name="v.class_hour">
+                                            <p class="orgName">学习周期：{$v.class_hour}天课时</p>
+                                        </notempty>
+
+                                    </a>
+                                    <notempty name="v.course_price">
+                                        <h5 class="price">{$v.course_price}</h5>
+                                    </notempty>
+                                    <notempty name="v.tips">
+                                        <if condition="$v.tips eq 1">
+                                            <span class="tag new">新款课程</span>
+                                            <elseif condition="$v.tips eq 2"/>
+                                            <span class="tag sale">火热</span>
+                                        </if>
+                                    </notempty>
+                                </div>
+                                <!-- product-container -->
+
+                            </li>
+
+                        </foreach>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- End row -->
+        </div>
+    </section>
+    <!-- End container -->
+
+    <section class="cooking-5 content-center">
+        <div class="container main-content " align="center">
+            <div class="col-md-12 sale-product" style="padding-top: 00px;padding-bottom: 60px;margin-bottom: 0">
+                <h2>网上烹饪课程</h2>
+
+                <p>大量精心制作的课程教材，探索你身边美食的秘密，你懂的烹饪科学技术，日常烹饪或专业厨房，都能用的着</p>
+            </div>
+
+            <!-- End row -->
+        </div>
+        <div class="container">
+            <div class="isotope col-3 gutter" style="margin-bottom:0;">
+                <foreach name="course_three" item="v">
+                    <div class="isotope-item">
+
+                        <div class="portfolio-item">
+
+                            <div class="portfolio-item-thumbnail">
+
+                                <img src="{$v.picture}" alt="">
+
+                                <div class="portfolio-item-hover">
+
+                                    <div class="portfolio-item-details" align="center">
+
+                                        <p><a href="{:U('Train/article')}?id={$v.id}">{$v.title}</a></p>
+
+                                        <p>{$v.description}</p>
+                                    </div>
+                                    <!-- portfolio-item-details -->
+
+                                    <a class="fancybox-portfolio-gallery zoom-action"
+                                       href="__PUBLIC__/home/images/image-1.jpg"><i
+                                            class="mt-icons-expand3"></i></a>
+
+                                </div>
+                                <!-- portfolio-item-hover -->
+
+                            </div>
+                            <!-- portfolio-item-thumbnail -->
+
+                        </div>
+                        <!-- portfolio-item -->
+
+                    </div>
+                </foreach>
+                <!-- isotope-item -->
+
+            </div>
+        </div>
+    </section>
+    <div class="container main-content " align="center">
+        <div class="col-md-12 sale-product" style="padding-top: 60px;padding-bottom: 60px;margin-bottom: 0">
+            <h2>美食荟萃</h2>
+
+            <p>食材有营，相信食物的力量；烹饪无界，分享饮食的知识和经验，这里有问题，同样有分享，这样才有意义和收获</p>
+        </div>
+
+        <!-- End row -->
+    </div>
+    <section class="full-section" id="section-26">
+
+        <div class="full-section-shadow-top"></div>
+
+        <div class="parallax-multilayer">
+            <div class="parallax-layer" data-y="45" data-x="65" data-stellar-ratio="1.2">
+                <img alt="" src="__PUBLIC__/home/images/parallax-2-image-1.png">
+            </div>
+            <div class="parallax-layer" data-y="40" data-x="30" data-stellar-ratio="0.6">
+                <img alt="" src="__PUBLIC__/home/images/parallax-2-image-8.png">
+            </div>
+            <notempty name="posts_four[4]">
+                <div class="parallax-layer" data-y="4" data-x="45" data-stellar-ratio="1.5">
+                    <!--<img alt="" src="__PUBLIC__/home/images/parallax-2-image-3.png">-->
+                    <div><img class="user-profile-img margin-top-15" src="{$posts_four[4].head_img}" alt=""/><span
+                            class="left dialog-1"
+                            style="font-size: 18px;margin-top: 15px;margin-left: 15px;"><a
+                            class="dialog" href="{:U('Index/detail')}?id={$posts_four[4].id}">{$posts_four[4].title}</a></span>
+                    </div>
+                </div>
+            </notempty>
+            <notempty name="posts_four[3]">
+                <div class="parallax-layer" data-y="30" data-x="52" data-stellar-ratio="0.81">
+                    <!--<img alt="" src="__PUBLIC__/home/images/parallax-2-image-4.png">-->
+                    <div><span class="left dialog-2" style="font-size: 18px;margin-top: 15px;margin-right: 15px;"><a
+                            class="dialog"
+                            href="{:U('Index/detail')}?id={$posts_four[3].id}">{$posts_four[3].title}</a></span><img
+                            class="user-profile-img margin-top-15" src="{$posts_four[3].head_img}" alt=""/></div>
+                </div>
+            </notempty>
+            <notempty name="posts_four[2]">
+                <div class="parallax-layer" data-y="13" data-x="45" data-stellar-ratio="1.78">
+                    <!--<img alt="" src="__PUBLIC__/home/images/parallax-2-image-5.png">-->
+                    <div><img class="user-profile-img margin-top-15" src="{$posts_four[2].head_img}" alt=""/><span
+                            class="left dialog-3"
+                            style="font-size: 18px;margin-top: 15px;margin-left: 15px;"><a
+                            class="dialog" href="{:U('Index/detail')}?id={$posts_four[2].id}">{$posts_four[2].title}</a></span>
+                    </div>
+                </div>
+            </notempty>
+            <notempty name="posts_four[1]">
+
+                <div class="parallax-layer" data-y="15" data-x="45" data-stellar-ratio="0.8">
+                    <!--<img alt="" src="__PUBLIC__/home/images/parallax-2-image-6.png">-->
+                    <div><img class="user-profile-img margin-top-15" src="{$posts_four[1].head_img}" alt=""/><span
+                            class="left dialog-4"
+                            style="font-size: 18px;margin-top: 15px;margin-left: 15px;"><a
+                            class="dialog" href="{:U('Index/detail')}?id={$posts_four[1].id}">{$posts_four[1].title}</a></span>
+                    </div>
+                </div>
+            </notempty>
+            <notempty name="posts_four[0]">
+                <div class="parallax-layer" data-stellar-ratio="1.02" data-x="52" data-y="20.9">
+                    <!--<img alt="" src="__PUBLIC__/home/images/parallax-2-image-7.png">-->
+                    <div><span class="left dialog-2" style="font-size: 18px;margin-top: 15px;margin-right: 15px;"><a
+                            class="dialog"
+                            href="{:U('Index/detail')}?id={$posts_four[0].id}">{$posts_four[0].title}</a></span><img
+                            class="user-profile-img margin-top-15" src="{$posts_four[0].head_img}" alt=""/></div>
+                </div>
+            </notempty>
+        </div>
+
+    </section>
+</block>
+
+<!-- End js -->
+<block name="myJs">
+    <script>
+        jQuery(document).ready(function () {
+//        window.onload = function () {
+//            window.onscroll = function () {
+//                var st = getScrollTop();//滚去的高度
+//                var at = $(".cooking-1").offset().top;
+//                var et = $(".cooking-2").offset().top;
+//                if (st >= at) {
+//                    $('.cooking-2-img').addClass('active');
+//                }
+//                if (st >= et) {
+//                    $('.cooking-4-img').removeClass('active');
+//                }
+//                //console.log(st + ',' + at + ',' + et);
+//            }
+//        };
+//        $(".link").on("click", function (event) {
+//            event.preventDefault();//the default action of the event will not be triggered
+//            $("html, body").animate({scrollTop: ($("#" + this.href.split("#")[1]).offset().top)}, 600);
+//        });
+
+
+            $(".owl-carousel5").owlCarousel({
+                pagination: false,
+                navigation: true,
+                items: 5,
+                addClassActive: true,
+                itemsCustom: [
+                    [0, 1],
+                    [320, 1],
+                    [480, 2],
+                    [660, 2],
+                    [700, 3],
+                    [768, 3],
+                    [992, 4],
+                    [1024, 4],
+                    [1200, 5],
+                    [1400, 5],
+                    [1600, 5]
+                ]
+            });
+
+            $(".rep").hover(function () {
+                $(".rep").removeClass('current');
+                $(this).addClass('current');
+                var r = $(this).index();
+                var s = 62 / 2;
+                var h = parseInt(r / 3) * (62 + 10) + s - 5;
+                $(".single-story i").css('top', h);
+            });
+
+            if (!is_touch_device()) {
+
+                $(window).stellar({
+                    horizontalScrolling: false,
+                    verticalScrolling: true,
+                    responsive: true
+                });
+
+            }
+
+            $(".parallax-multilayer .parallax-layer").each(function () {
+
+                var x = parseInt($(this).attr("data-x"), 10),
+                        y = parseInt($(this).attr("data-y"), 10);
+
+                $(this).css({
+                    "margin-left": x + "%",
+                    "margin-top": y + "%"
+                });
+
+            });
+
+            // ISOTOPE //
+            $(".isotope").imagesLoaded(function () {
+
+                var container = $(".isotope");
+
+                container.isotope({
+                    itemSelector: '.isotope-item',
+                    layoutMode: 'masonry',
+                    transitionDuration: '0.8s'
+                });
+
+                $(".filter li a").on("click", function () {
+                    $(".filter li a").removeClass("active");
+                    $(this).addClass("active");
+
+                    var selector = $(this).attr("data-filter");
+                    container.isotope({
+                        filter: selector
+                    });
+
+                    return false;
+                });
+
+                $(window).resize(function () {
+                    container.isotope();
+                });
+
+            });
+
+            //$(".portfolio-item").hoverdir();
+        });
+
+        function getScrollTop() {
+            var scrollTop = 0;
+            if (document.documentElement && document.documentElement.scrollTop) {
+                scrollTop = document.documentElement.scrollTop;
+            } else if (document.body) {
+                scrollTop = document.body.scrollTop;
+            }
+            return scrollTop;
+        }
+
+        function is_touch_device() {
+            return !!('ontouchstart' in window) || ( !!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints);
+        }
+    </script>
+</block>

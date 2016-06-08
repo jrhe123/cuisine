@@ -1,0 +1,63 @@
+<div class="login-panel">
+    <section class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-content">
+                    <h2>登录</h2>
+
+                    <div class="form-style form-style-3">
+                        <form class="signIn-form" onclick="return false">
+                            <div class="form-inputs clearfix">
+                                <p class="login-text signIn">
+                                    <input name="account" type="text" placeholder="登录账号" onkeyup="value=value.replace(/[\W]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                                    <i class="fa fa-user"></i>
+                                </p>
+
+                                <p class="login-password signIn">
+                                    <input name="pwd" type="password" placeholder="密码" onkeyup="value=value.replace(/[\W]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                                    <i class="fa fa-lock"></i>
+                                    <a href="#">忘记密码</a>
+                                </p>
+                            </div>
+                            <p class="form-submit login-submit">
+                                <input onclick="signIn()" type="submit" value="登录" class="button color small login-submit submit">
+                            </p>
+
+                            <div class="rememberme">
+                                <label><input name="remember" type="checkbox" class="icheck"> 记住我</label>
+                            </div>
+                            <div class="fast-login">
+                                <a style="color: #fff">快速登录</a>
+                                <a style="padding-left: 7px;" target="_blank" href="#">
+                                    <img src="__PUBLIC__/home/images/weixin_login_btn.png"
+                                         class="mb5">
+                                </a>
+                                <a class="wb_login" style="padding-left: 7px;" target="_blank" href="javascript:;">
+                                    <img src="__PUBLIC__/home/images/weibo_login_btn.png"
+                                         class="mb5">
+                                </a>
+                                <a style="padding-left: 7px;" target="_blank" href="#">
+                                    <img src="__PUBLIC__/home/images/qq_login_btn.png" class="mb5">
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End col-md-6 -->
+            <div class="col-md-6">
+                <div class="page-content Register">
+                    <h2>现在注册</h2>
+
+                    <p>中国烹饪学院 是中国领先的烹饪社区。
+                        我们希望为初学者提供一个纯粹、高质的技术交流平台，
+                        与各阶段人员一起学习、交流与成长，创造属于厨师的时代！ </p>
+                    <a class="button color small signup">注册账号</a>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End col-md-6 -->
+        </div>
+    </section>
+</div>

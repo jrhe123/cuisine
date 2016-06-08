@@ -1,0 +1,46 @@
+<header id="header">
+    <section class="container clearfix">
+        <div class="logo"><a href="index.html"><img alt="" style="height: 50px;"
+                                                    src="__PUBLIC__/home/images/logo.png"></a></div>
+        <nav class="navigation">
+            <ul>
+                <li class="{$home}"><a href="{:U('Index/index')}">首页</a>
+                </li>
+                <li class="{$list}"><a href="{:U('Index/blogList')}">美食汇聚</a>
+                </li>
+                <li class="{$train}"><a href="{:U('Train/index')}">烹饪培训</a>
+                </li>
+
+            </ul>
+        </nav>
+        <div class="header-search">
+            <form>
+                <div class="input-icon">
+                    <button type="submit" class="search-submit"></button>
+                    <input  type="text" placeholder="输入搜索内容" class="form-control">
+                </div>
+            </form>
+        </div>
+        <nav class="header-top-nav">
+            <ul>
+                <li><a href="{:U('Contact/index')}"><i class="fa fa-envelope-o"></i>联系我们</a></li>
+                <empty name="Think.session.cooking_user_id">
+                    <li><a href="login.html" id="login-panel"><i class="fa fa-user"></i>登录</a></li>
+                    <else/>
+                    <li class="user">
+                        <a href="{:U('Profile/index')}?id={$Think.session.cooking_user_id}"><img class="user-profile-img" style="max-width: 40px;float: left;margin-right: 10px;" src="{$Think.session.cooking_user_header}" alt=""/></a>
+                        <a href="javascript:;"><span class="username">{$Think.session.cooking_user_name}</span> <span class="msg"><i class="fa fa-volume-up"></i></span></a>
+                        <ul class="ul-current">
+                            <li><a href="{:U('Profile/index')}?id={$Think.session.cooking_user_id}"><i class="fa fa-user"></i> 我的主页</a></li>
+                            <li><a href="{:U('Profile/ask')}"><i class="fa fa-pencil-square-o"></i> 我要发帖</a></li>
+                            <li><a href="{:U('Profile/draft')}?id={$Think.session.cooking_user_id}"><i class="fa  fa-file-text-o"></i> 我的草稿</a></li>
+                            <li><a href="{:U('Profile/message')}?id={$Think.session.cooking_user_id}"><i class="fa fa-comment-o"></i> 我的消息 <span class="message"></span></a></li>
+                            <li><a href="{:U('Behavior/signOut')}"><i class="fa fa-sign-out"></i> 注销</a></li>
+                        </ul>
+                    </li>
+                </empty>
+            </ul>
+        </nav>
+    </section>
+    <!-- End container -->
+</header>

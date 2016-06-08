@@ -1,0 +1,36 @@
+<div class="panel-pop" id="signup">
+    <h2>注册<i class="icon-remove"></i></h2>
+
+    <div class="form-style form-style-3">
+        <form id="signupForm" onclick="return false">
+            <div class="form-inputs clearfix">
+                <p>
+                    <label class="required">登录账号<span>*</span></label>
+                    <input id="account" name="account" type="text" onkeyup="if(/[\W]/g.test(this.value)){toastMsg('warning','只能输入英文字母与数字','提示信息');this.value='';} " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </p>
+                <p>
+                    <label class="required">用户名<span>*</span></label>
+                    <input name="nickname" type="text">
+                </p>
+
+                <p>
+                    <label class="required">手机号码<span>*</span></label>
+                    <input name="phone" type="text" onkeyup="if(/\D/.test(this.value)){toastMsg('warning','只能输入数字','提示信息');this.value='';}">
+                </p>
+
+                <p>
+                    <label class="required">密码<span>*</span></label>
+                    <input id="pwd" name="pwd" type="password" value="">
+                </p>
+
+                <p>
+                    <label class="required">确认密码<span>*</span></label>
+                    <input name="confpwd" type="password" value="">
+                </p>
+            </div>
+            <p class="form-submit">
+                <input onclick="signUp()" type="submit" value="注册" class="button color small submit">
+            </p>
+        </form>
+    </div>
+</div>
