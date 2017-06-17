@@ -1,2 +1,7 @@
 # cuisine
-cooking (developed by Think-PHP framework)
+
+WebApp Demo Project
+
+Roy He
+
+Cuisine WebApp : developed by Think-PHP framework
